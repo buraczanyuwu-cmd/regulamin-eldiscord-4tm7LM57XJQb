@@ -5,107 +5,253 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Regulamin Serwera EnergyDiscord</title>
     <style>
-        #loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        /* Tło strony dopasowane do ciemnego stylu Discorda */
+        body {
             background-color: #2f3136;
             color: white;
-            font-family: Arial, sans-serif;
-            font-size: 24px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
         }
+
+        #loading {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20vh;
+        }
+
         #regulamin-content {
             display: none;
-            font-family: Arial, sans-serif;
-            background-color: #2f3136;
-            padding: 20px;
-            color: white;
-            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
         }
+
+        h1 {
+            text-align: center;
+            color: #0096e6;
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .welcome {
+            text-align: center;
+            color: #b9bbbe;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        /* SIATKA KAFELKÓW */
         .siatka-zasad {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(4, 1fr); /* 4 kolumny obok siebie */
             gap: 20px;
-            max-width: 1200px;
-            margin: 20px auto;
         }
-        .kafelek {
-            background: white;
-            border: 1px solid #2ecc71;
-            border-radius: 4px;
+
+        /* STYLIZACJA KAFELKA (zgodnie z obrazkiem image_6e8db7.png) */
+        details {
+            background-color: #9cd6ec; /* Jasnoniebieskie tło rozwiniętego opisu */
+            border-radius: 20px; /* Zaokrąglone rogi okienka */
             overflow: hidden;
+            height: max-content;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .naglowek {
-            background-color: #2ecc71;
+
+        /* Ciemnoniebieski nagłówek zasady */
+        summary {
+            background-color: #0096e6; /* Ciemnoniebieski kolor z rysunku */
             color: white;
-            padding: 15px;
+            padding: 20px 15px;
+            font-size: 16px;
             font-weight: bold;
-            font-size: 20px;
-        }
-        .zawartosc {
-            padding: 15px;
-            color: #333;
-            min-height: 120px;
+            cursor: pointer;
+            list-style: none;
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
+            align-items: center;
+            user-select: none;
         }
-        .obrazek {
-            border: 2px dashed #ccc;
-            padding: 10px;
-            text-align: center;
-            color: #777;
-            background: #f9f9f9;
-            margin-top: 10px;
+
+        summary::-webkit-details-marker {
+            display: none;
         }
-        @media (max-width: 900px) { .siatka-zasad { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .siatka-zasad { grid-template-columns: 1fr; } }
+
+        /* Biały trójkącik z rysunku */
+        summary::after {
+            content: '';
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 13px solid white; /* Biały trójkąt skierowany w dół */
+            transition: transform 0.2s ease;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+
+        /* Obrócenie trójkącika po kliknięciu i rozwinięciu */
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        /* Styl dla opisu wewnątrz okienka */
+        .opis-zasady {
+            padding: 20px;
+            color: white; /* Biały napis na jasnoniebieskim tle */
+            font-size: 15px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        /* Responsywność dla mniejszych ekranów (np. telefony) */
+        @media (max-width: 1000px) { .siatka-zasad { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 650px) { .siatka-zasad { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
+    <!-- Ekran ładowania przed weryfikacją -->
     <div id="loading">Weryfikowanie konta Discord...</div>
 
+    <!-- Główna zawartość regulaminu -->
     <div id="regulamin-content">
-        <h1 style="text-align: center;">📜 Regulamin Zweryfikowany</h1>
-        <p style="text-align: center;" id="welcome-text">Witaj!</p>
+        <h1>📜 Regulamin Serwera EnergyDiscord</h1>
+        <p class="welcome" id="welcome-text">Witaj!</p>
         
         <div class="siatka-zasad">
-            <div class="kafelek">
-                <div class="naglowek">zasada</div>
-                <div class="zawartosc">
-                    <span>opis zasady</span>
-                    <div class="obrazek">[jakiś obraz]</div>
+
+            <!-- KAFELEK 1 -->
+            <details>
+                <summary>🎭 Żadnych dram</summary>
+                <div class="opis-zasady">
+                    Nie przenoś dram z innych serwerów tutaj, ani nie wynoś dram z tego serwera gdzie indziej.
                 </div>
-            </div>
-            <div class="kafelek">
-                <div class="naglowek">zasada</div>
-                <div class="zawartosc">
-                    <span>opis zasady</span>
-                    <div class="obrazek">[jakiś obraz]</div>
+            </details>
+
+            <!-- KAFELEK 2 -->
+            <details>
+                <summary>🗣️ Zasada językowa</summary>
+                <div class="opis-zasady">
+                    Nie musisz znać języka polskiego, żeby tu przebywać. Możesz pisać w każdym języku, w którym czujesz się najlepiej, ale nie używaj języków jako broni, by kogoś obrazić „bo i tak nie zrozumie”.
                 </div>
-            </div>
-            <div class="kafelek">
-                <div class="naglowek">zasada</div>
-                <div class="zawartosc">
-                    <span>opis zasady</span>
-                    <div class="obrazek">[jakiś obraz]</div>
+            </details>
+
+            <!-- KAFELEK 3 -->
+            <details>
+                <summary>🏳️‍🌈 Osoby LGBT mile widziane</summary>
+                <div class="opis-zasady">
+                    To jest przestrzeń przyjazna osobom LGBT+, osobom z niepełnosprawnościami, ludziom każdego wieku i pochodzenia.
                 </div>
-            </div>
-            <div class="kafelek">
-                <div class="naglowek">zasada</div>
-                <div class="zawartosc">
-                    <span>opis zasady</span>
-                    <div class="obrazek">[jakiś obraz]</div>
+            </details>
+
+            <!-- KAFELEK 4 -->
+            <details>
+                <summary>💬 Krytykowanie zachowania</summary>
+                <div class="opis-zasady">
+                    Masz prawo skomentować czyjeś zachowanie – w tym działania administracji.
                 </div>
-            </div>
+            </details>
+
+            <!-- KAFELEK 5 -->
+            <details>
+                <summary>🤝 EnergyDiscord ≠ sekta</summary>
+                <div class="opis-zasady">
+                    To nie jest sekta. Dopóki robisz to bez przemocy słownej, masz pełne prawo powiedzieć „ej, to było nie okej”.
+                </div>
+            </details>
+
+            <!-- KAFELEK 6 -->
+            <details>
+                <summary>🧠 Szacunek dla doświadczeń</summary>
+                <div class="opis-zasady">
+                    Nie udawaj zaburzeń psychicznych, których nie masz. Szanuj osoby z realnymi doświadczeniami.
+                </div>
+            </details>
+
+            <!-- KAFELEK 7 -->
+            <details>
+                <summary>📁 Odpowiednie kanały</summary>
+                <div class="opis-zasady">
+                    Używaj odpowiednich kanałów zgodnie z ich przeznaczeniem. Treści nie na temat kanału będą usuwane, no chyba że przytoczone w kontekście.
+                </div>
+            </details>
+
+            <!-- KAFELEK 8 -->
+            <details>
+                <summary>🔞 Żadnych treści NSFW/NSFL</summary>
+                <div class="opis-zasady">
+                    Nie publikuj materiałów nieodpowiednich dla każdego użytkownika bez odpowiednich oznaczeń. Zaspoileruj takie treści, jeżeli potrzeba.
+                </div>
+            </details>
+
+            <!-- KAFELEK 9 -->
+            <details>
+                <summary>🔒 Ochrona prywatności i RODO</summary>
+                <div class="opis-zasady">
+                    N NEVER ujawniaj czyichś prywatnych informacji bez jego zgody. Do tego szanuj przestręń innych - ogranicz pingi, nie narzucaj się w DMach.
+                </div>
+            </details>
+
+            <!-- KAFELEK 10 -->
+            <details>
+                <summary>🧘 Nie angażuj się bez potrzeby</summary>
+                <div class="opis-zasady">
+                    Nie każda rozmowa jest dla Ciebie - i to jest w porządku. Jeśli coś Cię nie interesuje, możesz to ominąć.
+                </div>
+            </details>
+
+            <!-- KAFELEK 11 -->
+            <details>
+                <summary>✍️ Zostaw po sobie ślad</summary>
+                <div class="opis-zasady">
+                    Nie edytuj i nie usuwaj wiadomości po dramie. Weź pełną odpowiedzialność za swoje słowa.
+                </div>
+            </details>
+
+            <!-- KAFELEK 12 -->
+            <details>
+                <summary>📢 Reklama</summary>
+                <div class="opis-zasady">
+                    Reklamowanie się jest dozwolone wyłącznie za zezwoleniem administracji, jeśli pasuje do kontekstu rozmowy i nie jest natarczywe. Wchodzenie na serwer tylko po to, żeby się zareklamować - ban.
+                </div>
+            </details>
+
+            <!-- KAFELEK 13 -->
+            <details>
+                <summary>🔞 Wiek użytkowników (ToS)</summary>
+                <div class="opis-zasady">
+                    Zgodnie z ToS, Discord w Polsce jest 16+. Osoby poniżej 16 lat zostaną zbanowane, jeżeli się do tego przyznają.
+                </div>
+            </details>
+
+            <!-- KAFELEK 14 -->
+            <details>
+                <summary>🚫 Serwer anti-AI</summary>
+                <div class="opis-zasady">
+                    W "Strefie Wyobraźni" i w kanałach do postowania fanartów jest zakaz używania generatywnej AI. Masz talent? Nie marnuj go. <br><br>
+                    <i>"Patrzcie, co zrobiłem!" — nie, kochany, kłamiesz. To KOMPUTER za ciebie zrobił.</i>
+                </div>
+            </details>
+
+            <!-- KAFELEK 15 -->
+            <details>
+                <summary>🎨 Wybór ról</summary>
+                <div class="opis-zasady">
+                    Możecie wybrać role na kanale ⁠🔴🟡🟢・role. Kogo z maskotek lubisz najbardziej? Na jakim stanowisku chcesz pracować w Strefie Wyobraźni? Nie wahaj się wybrać.
+                </div>
+            </details>
+
+            <!-- KAFELEK 16 -->
+            <details>
+                <summary>🏛️ Tematy polityczne</summary>
+                <div class="opis-zasady">
+                    Tematy polityczne, oraz polityka ogółem są ograniczone. Tyle w temacie. Polityka to temat raczej nie dla nas.
+                </div>
+            </details>
+
         </div>
     </div>
-
-    <script>
-        // --- KONFIGURACJA ---
-        const CLIENT_ID = '1522174562589212813';
+    <script>        const CLIENT_ID = '1522174562589212813'; 
         const REDIRECT_URI = 'https://buraczanyuwu-cmd.github.io/regulamin-eldiscord-4tm7LM57XJQb/';
 
         window.onload = function() {
@@ -136,7 +282,7 @@
             .then(user => {
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('regulamin-content').style.display = 'block';
-                document.getElementById('welcome-text').innerText = `Witaj ${user.username}! Przeczytaj uważnie poniższe zasady.`;
+                document.getElementById('welcome-text').innerText = `Witaj, ${user.username}! Zaakceptuj zasady, aby w pełni korzystać z EnergyDiscord.`;
             })
             .catch(err => {
                 sessionStorage.removeItem('discord_token');
