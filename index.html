@@ -1,115 +1,54 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regulamin Serwera EnergyDiscord</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        html, body { background-image: url('assets/tlo_nwaTdUjA0HM5iwPUOrL8oUG3zE0VYwU.png'); background-size: cover; background-position: center; background-attachment: fixed; background-color: #2f3136; min-height: 100%; margin: 0; }
-        body { color: white; font-family: 'Poppins', Arial, sans-serif; padding: 20px; }
-        .language-switcher { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1000; }
-        .lang-btn { background-color: rgba(22, 100, 224, 0.6); color: white; border: 2px solid #1664e0; padding: 8px 14px; font-weight: 600; border-radius: 10px; cursor: pointer; transition: 0.2s; }
-        .lang-btn.active { background-color: #1664e0; border-color: white; box-shadow: 0 0 10px rgba(255,255,255,0.3); }
-        #loading { text-align: center; font-size: 24px; margin-top: 20vh; }
-        #regulamin-content { display: none; max-width: 1200px; margin: 0 auto; }
-        .obraz-naglowek { display: block; max-width: 100%; height: auto; margin: 60px auto 30px auto; }
-        .siatka-zasad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 50px; }
-        details { background-color: #88b5fc; border-radius: 20px; overflow: hidden; opacity: 0; transform: translateY(20px); transition: 0.5s; cursor: pointer; }
-        details.pokaz { opacity: 1; transform: translateY(0); }
-        summary { background-color: #1664e0; padding: 22px; font-weight: 600; text-align: center; list-style: none; }
-        summary::-webkit-details-marker { display: none; }
-        .opis-zasady { padding: 20px; text-align: center; line-height: 1.6; }
-        .zasada-grafika { display: block; max-width: 100%; height: auto; border-radius: 10px; margin: 15px auto; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        @media (max-width: 1000px) { .siatka-zasad { grid-template-columns: repeat(2, 1fr); } }
-    </style>
-</head>
-<body>
-
-    <div class="language-switcher">
-        <button class="lang-btn active" data-lang="pl" onclick="zmienJezyk('pl')">PL</button>
-        <button class="lang-btn" data-lang="en" onclick="zmienJezyk('en')">EN</button>
-    </div>
-
-    <div id="loading">Weryfikowanie konta Discord...</div>
-
-    <div id="regulamin-content">
-        <img id="naglowek-grafika" src="assets/EnergyDiscord-Regulamin.png" class="obraz-naglowek">
-        <p id="welcome-text" style="text-align:center; color:#b9bbbe; margin-bottom:40px;">Witaj!</p>
-        
-        <div class="siatka-zasad" id="zasady-container"></div>
-        
-        <h2 id="social-naglowek" style="text-align:center; margin-top:50px; color:white;">Zasady postowania z sociali</h2>
-        <div class="siatka-zasad" id="social-container"></div>
-    </div>
-
-    <script>
-        const CLIENT_ID = '1522174562589212813';
-        const REDIRECT_URI = 'https://buraczanyuwu-cmd.github.io/regulamin-eldiscord-4tm7LM57XJQb/';
-        let aktualnyJezyk = 'pl';
-
-        const dane = {
-            pl: {
-                zasady: [
-                    { title: "1️⃣・Żadnych dram", desc: "Nie przenoś dram z innych serwerów tutaj, ani nie wynoś dram z tego serwera gdzie indziej." },
-                    { title: "2️⃣・Zasada językowa", desc: "Nie musisz znać języka polskiego, żeby tu przebywać. Możesz pisać w każdym języku, w którym czujesz się najlepiej, ale nie używaj języków jako broni, by kogoś obrazić „bo i tak nie zrozumie”." },
-                    { title: "3️⃣・Osoby LGBT mile widziane", desc: "To jest przestrzeń przyjazna osobom LGBT+, osobom z niepełnosprawnościami, ludziom każdego wieku i pochodzenia." },
-                    { title: "4️⃣・Krytykowanie zachowania", desc: "Masz prawo skomentować czyjeś zachowanie – w tym działania administracji." },
-                    { title: "5️⃣・EnergyDiscord ≠ sekta", desc: "To nie jest sekta. Dopóki robisz to bez przemocy słownej, masz pełne prawo powiedzieć „ej, to było nie okej”." },
-                    { title: "6️⃣・Nie udawaj zaburzeń", desc: "Nie udawaj zaburzeń psychicznych, których nie masz. Szanuj osoby z realnymi doświadczeniami." },
-                    { title: "7️⃣・Używaj odpowiednich kanałów", desc: "Używaj odpowiednich kanałów zgodnie z ich przeznaczeniem. Treści nie na temat kanału będą usuwane, no chyba że przytoczone w kontekście." },
-                    { title: "8️⃣・Żadnych treści NSFW/NSFL", desc: "Nie publikuj materiałów nieodpowiednich dla każdego użytkownika bez odpowiednich oznaczeń. Zaspoileruj takie treści, jeżeli potrzeba." },
-                    { title: "9️⃣・RODO", desc: "To nie jest miejsce na łamanie RODO. Nigdy nie ujawniaj czyichś prywatnych informacji bez jego zgody. Do tego szanuj przestrzeń innych - ogranicz pingi, nie narzucaj się w DMach." },
-                    { title: "1️⃣0️⃣・Nie angażuj się", desc: "Nie angażuj się jeżeli nie musisz. Nie każda rozmowa jest dla Ciebie - i to jest w porządku. Jeśli coś Cię nie interesuje, możesz to ominąć." },
-                    { title: "1️⃣1️⃣・Zostaw ślad", desc: "Zostaw po sobie ślad. Nie edytuj i nie usuwaj wiadomości po dramie. Weź pełną odpowiedzialność za swoje słowa." },
-                    { title: "1️⃣2️⃣・Reklama", desc: "Reklamowanie się jest dozwolone wyłącznie za zezwoleniem administracji, jeśli pasuje do kontekstu rozmowy i nie jest natarczywe. Wchodzenie na serwer tylko po to, żeby się zareklamować - ban." },
-                    { title: "1️⃣3️⃣・Wiek (ToS)", desc: "Zgodnie z ToS, Discord w Polsce jest 16+. Osoby poniżej 16 lat zostaną zbanowane, jeżeli się do tego przyznają." },
-                    { title: "1️⃣4️⃣・Anti-AI", desc: "Serwer jest głównie anti-AI. W 'Strefie Wyobraźni' i w kanałach do postowania fanartów jest zakaz używania generatywnej AI. Masz talent? Nie marnuj go. 'Patrzcie, co zrobiłem!' — nie, kochany, kłamiesz. To KOMPUTER za ciebie zrobił." },
-                    { title: "1️⃣5️⃣・Wybór ról", desc: "Możecie wybrać role na kanale <a href='https://discord.com/channels/1398986303768629368/1398990264026361877'>🔴🟡🟢・role</a>. Kogo z maskotek lubisz najbardziej? Na jakim stanowisku chcesz pracować w Strefie Wyobraźni? Nie wahaj się wybrać." },
-                    { title: "1️⃣6️⃣・Polityka", desc: "Tematy polityczne, oraz polityka ogółem są ograniczone. Tyle w temacie. Polityka to temat raczej nie dla nas." }
-                ],
-                zasadySociali: [
-                    { title: "1️⃣・Znak wodny", desc: "Podczas wstawiania treści z internetu (w tym z socialów Energylandii) <b>PROSIMY O ZAMAZYWANIE WSZELKICH ZNAKÓW WODNYCH</b>.<br>A zamiast znaku wodnego zawsze możesz dopisać źródło wraz z linkiem. <a href='https://discord.com/channels/1398986303768629368/1398990174234476596/1462434782821748958'>Przykład poprawnie zapostowanego zdjęcia</a>.<hr><b>1. Oficjalna grafika promocyjna to jedyny wyjątek</b><br>Jeśli zdjęcie jest plakatem informacyjnym (np. godziny otwarcia), logo wtopione w design jest akceptowalne.<br><br><b>2. Zdjęcia reporterskie mają być czyste</b><br>Zakaz wrzucania zdjęć z „paskudnym” logo w rogu. Szpeci ono kadr.<br><br><b>3. Idealny zamiennik: „Czyste Niebo”</b><br>Logo w lewym górnym rogu ma zostać usunięte bezśladowo, pozostawiając naturalną strukturę tła.<br><br><b>W skrócie:</b> Plakat z info? Może zostać. Zwykłe foto? Ścierasz watermark do gołego nieba!", imgSrc: "https://cdn.discordapp.com/attachments/1522200742406914171/1522200794261225512/image.png" },
-                    { title: "2️⃣・Uniwersalne emoji", desc: "Zamieniaj każdą emotkę w innym kolorze skóry (np. 👋🏼) w jej uniwersalny wariant (np. 👋).<br><br>EnergyDiscord nie toleruje rasizmu — każdy zasługuje tutaj na uniwersalność i równe traktowanie.<br><br><a href='https://discord.com/channels/1398986303768629368/1398990348168200212/1514420795798065162'>Przykład poprawnie zapostowanej emotki</a>." },
-                    { title: "3️⃣・Prawa autorskie", desc: "ZAWSZE oznaczaj oryginalnego twórcę materiałów — nie tolerujemy kradzieży własności intelektualnej oraz zdjęć.<br><br>Zrobienie krótkiego researchu nie boli. Jeśli profil, z którego pobierasz treść, sam zapomniał podać autora, sprawdź to i uzupełnij źródło samodzielnie." }
-                ]
-            },
-            en: { /* angielska wersja pozostaje bez zmian */ }
-        };
-
-        function stworzKafelek(tytul, tresc, img = null) {
-            const d = document.createElement('details'), s = document.createElement('summary'), div = document.createElement('div');
-            s.innerHTML = tytul; div.className = 'opis-zasady';
-            const czesci = tresc.split('<hr>');
-            div.innerHTML = czesci[0];
-            if (img) { const i = document.createElement('img'); i.src = img; i.className = 'zasada-grafika'; div.appendChild(i); }
-            if (czesci[1]) { const r = document.createElement('div'); r.innerHTML = czesci[1]; r.style.marginTop = "15px"; div.appendChild(r); }
-            d.append(s, div); return d;
+<script>
+    // Zmieniamy strukturę danych, dodając osobne pola na zdjęcia
+    const dane = {
+        pl: {
+            zasadySociali: [
+                { 
+                    title: "1️⃣・Znak wodny", 
+                    desc: "Podczas wstawiania treści z internetu (w tym z socialów Energylandii) <b>PROSIMY O ZAMAZYWANIE WSZELKICH ZNAKÓW WODNYCH</b>.<br>A zamiast znaku wodnego zawsze możesz dopisać źródło wraz z linkiem. <a href='https://discord.com/channels/1398986303768629368/1398990174234476596/1462434782821748958'>Przykład poprawnie zapostowanego zdjęcia</a>.<hr><b>1. Oficjalna grafika promocyjna to jedyny wyjątek</b><br>Jeśli zdjęcie jest plakatem informacyjnym (np. godziny otwarcia), logo wtopione w design jest akceptowalne.<br><br><b>2. Zdjęcia reporterskie mają być czyste</b><br>Zakaz wrzucania zdjęć z „paskudnym” logo w rogu. Szpeci ono kadr.<br><br><b>3. Idealny zamiennik: „Czyste Niebo”</b><br>Logo w lewym górnym rogu ma zostać usunięte bezśladowo, pozostawiając naturalną strukturę tła.<br><br><b>W skrócie:</b> Plakat z info? Może zostać. Zwykłe foto? Ścierasz watermark do gołego nieba!",
+                    imgMain: "https://i.ibb.co/HT6mjNMX/Energy-Discord-Zasada1-PL.png",
+                    imgFooter: "https://i.ibb.co/G3WZ72W2/Energy-Discord-Zasada1-Dopelnienie.png"
+                }
+                // ... reszta zasad
+            ]
+        },
+        en: {
+            zasadySociali: [
+                { 
+                    title: "1️⃣・Watermarks", 
+                    desc: "Please remove <b>ALL WATERMARKS</b> if posting something from the internet.<hr><b>1. Official Promotional Graphics Are the Only Exception</b><br>If an image is a full-fledged informational poster, the embedded park logo is acceptable.<br><br><b>2. Landscape Photos Must Be Clean</b><br>It is strictly forbidden to submit standard photos branded with an ugly logo.<br><br><b>3. The Ultimate Standard: „Clear Skies”</b><br>The logo must be seamlessly removed, leaving the natural texture of the background intact.",
+                    imgMain: "https://i.ibb.co/mVB6HKJB/Energy-Discord-Zasada1-EN.png",
+                    imgFooter: "https://i.ibb.co/G3WZ72W2/Energy-Discord-Zasada1-Dopelnienie.png"
+                }
+            ]
         }
+    };
 
-        function render() {
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('regulamin-content').style.display = 'block';
-            const c1 = document.getElementById('zasady-container'), c2 = document.getElementById('social-container');
-            c1.innerHTML = ''; c2.innerHTML = '';
-            dane[aktualnyJezyk].zasady.forEach(z => c1.appendChild(stworzKafelek(z.title, z.desc)));
-            dane[aktualnyJezyk].zasadySociali.forEach(z => c2.appendChild(stworzKafelek(z.title, z.desc, z.imgSrc)));
-            document.querySelectorAll('details').forEach((d, i) => setTimeout(() => d.classList.add('pokaz'), i * 50));
+    // Zmodyfikowana funkcja, która wstawia zdjęcia w dwóch miejscach
+    function stworzKafelek(tytul, tresc, imgM, imgF) {
+        const d = document.createElement('details'), s = document.createElement('summary'), div = document.createElement('div');
+        s.innerHTML = tytul; div.className = 'opis-zasady';
+        
+        const czesci = tresc.split('<hr>');
+        
+        // 1. Pierwsza część tekstu
+        div.innerHTML = czesci[0];
+        // 2. Zdjęcie główne
+        if (imgM) { const i = document.createElement('img'); i.src = imgM; i.className = 'zasada-grafika'; div.appendChild(i); }
+        
+        // 3. Dopełnienie (jeśli istnieje)
+        if (czesci[1]) {
+            const r = document.createElement('div');
+            r.innerHTML = czesci[1];
+            r.style.marginTop = "15px";
+            // 4. Zdjęcie dopełnienia (pod tekstem dopełnienia)
+            if (imgF) { const i2 = document.createElement('img'); i2.src = imgF; i2.className = 'zasada-grafika'; r.appendChild(i2); }
+            div.appendChild(r);
         }
+        
+        d.append(s, div); return d;
+    }
 
-        window.onload = () => {
-            const token = new URLSearchParams(window.location.hash.slice(1)).get('access_token') || sessionStorage.getItem('discord_token');
-            if (token) {
-                sessionStorage.setItem('discord_token', token);
-                fetch('https://discordapp.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } })
-                .then(res => res.json()).then(u => { document.getElementById('welcome-text').innerText = `Witaj, ${u.username}!`; render(); })
-                .catch(() => window.location.href = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`);
-            } else {
-                window.location.href = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
-            }
-        };
-
-        function zmienJezyk(k) { aktualnyJezyk = k; render(); }
-    </script>
-</body>
-</html>
+    // Wywołanie w render():
+    // dane[aktualnyJezyk].zasadySociali.forEach(z => c2.appendChild(stworzKafelek(z.title, z.desc, z.imgMain, z.imgFooter)));
+</script>
