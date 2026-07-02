@@ -227,7 +227,8 @@
 
     <div id="regulamin-content">
         
-        <img src="assets/EnergyDiscord-Regulamin.png" alt="Nagłówek regulaminu" class="obraz-naglowek">
+        <!-- Dodano ID dla dynamicznej podmiany nagłówka graficznego -->
+        <img id="naglowek-grafika" src="assets/EnergyDiscord-Regulamin.png" alt="Nagłówek regulaminu" class="obraz-naglowek">
 
         <p class="welcome" id="welcome-text">Witaj!</p>
         
@@ -239,12 +240,13 @@
     </div>
 
     <script>
-        // --- BAZA TEKSTÓW (PL / EN) ---
+        // --- BAZA TEKSTÓW I ZASOBÓW (PL / EN) ---
         const tlumaczenia = {
             pl: {
                 loading: "Weryfikowanie konta Discord...",
                 welcome: "Witaj!",
                 welcomeUser: "Jesteś zalogowany jako: {username}.",
+                headerImg: "assets/EnergyDiscord-Regulamin.png",
                 zasady: [
                     { title: "1️⃣・Żadnych dram", desc: "Nie przenoś dram z innych serwerów tutaj, ani nie wynoś dram z tego serwera gdzie indziej." },
                     { title: "2️⃣・Zasada językowa", desc: "Nie musisz znać języka polskiego, żeby tu przebywać. Możesz pписать w każdym języku, w którym czujesz się najlepiej, ale nie używaj języków jako broni, by kogoś obrazić „bo i tak nie zrozumie”." },
@@ -268,6 +270,7 @@
                 loading: "Verifying Discord account...",
                 welcome: "Welcome!",
                 welcomeUser: "You are logged in as: {username}.",
+                headerImg: "assets/logo_english.png",
                 zasady: [
                     { title: "1️⃣・No drama", desc: "Do not move dramas from other servers here, or move dramas from this server anywhere else." },
                     { title: "2️⃣・Language barrier", desc: "You don't need to know Polish to be here. You can write in any language you feel most comfortable with, but do not use languages as a weapon to insult someone 'because they won't understand anyway'." },
@@ -386,6 +389,9 @@
             // Zmiana języka strony (atrybut HTML)
             document.documentElement.lang = kodJezyka;
 
+            // Zmiana nagłówka graficznego dla odpowiedniego języka
+            document.getElementById('naglowek-grafika').src = tlumaczenia[kodJezyka].headerImg;
+
             // Aktualizacja tekstów dynamicznych
             odswiezTekstPowitania();
             generujKafelki();
@@ -398,6 +404,10 @@
         function pokazZawartoscStrony() {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('regulamin-content').style.display = 'block';
+            
+            // Upewnienie się, że właściwy nagłówek ładuje się na start
+            document.getElementById('naglowek-grafika').src = tlumaczenia[aktualnyJezyk].headerImg;
+            
             generujKafelki();
             animujWejscieKafelkow();
         }
