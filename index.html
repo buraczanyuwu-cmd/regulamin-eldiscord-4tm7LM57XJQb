@@ -68,7 +68,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        /* GÓRNA CZĘŚĆ ZASADY */
+        /* GÓRNA CZĘŚĆ ZASADY (WYŚRODKOWANA) */
         summary {
             background-color: #1664e0; /* KOLOR GÓRNEJ CZĘŚCI ZASADY */
             color: white;
@@ -78,18 +78,22 @@
             cursor: pointer;
             list-style: none;
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* Wyśrodkowanie tekstu poziomo */
             align-items: center;
+            position: relative; /* Potrzebne do pozycjonowania trójkącika */
             user-select: none;
+            text-align: center;
         }
 
         summary::-webkit-details-marker {
             display: none;
         }
 
-        /* Biały trójkącik */
+        /* Biały trójkącik z prawej strony */
         summary::after {
             content: '';
+            position: absolute;
+            right: 15px; /* Trójkącik trzyma się zawsze prawej krawędzi */
             display: inline-block;
             width: 0;
             height: 0;
@@ -97,7 +101,6 @@
             border-right: 10px solid transparent;
             border-top: 13px solid white;
             transition: transform 0.2s ease;
-            margin-left: 10px;
             flex-shrink: 0;
         }
 
@@ -105,13 +108,14 @@
             transform: rotate(180deg);
         }
 
-        /* Wnętrze z opisem */
+        /* Wnętrze z opisem (WYŚRODKOWANE) */
         .opis-zasady {
             padding: 20px;
             color: white;
             font-size: 15px;
             font-weight: 700; /* Pogrubiony tekst opisu jak na rysunku */
             line-height: 1.5;
+            text-align: center; /* Wyśrodkowanie treści zasady */
         }
 
         /* RWD dla telefonów */
@@ -125,8 +129,8 @@
 
     <div id="regulamin-content">
         
-        <!-- NAGŁÓWEK: Podmień LINK_DO_NAGLOWKA na właściwy adres obrazu -->
-        <img src="LINK_DO_NAGLOWKA" alt="Nagłówek EnergyDiscord" class="obraz-naglowek">
+        <!-- NAGŁÓWEK: Podmień logo.png na właściwą nazwę pliku jeśli trzeba -->
+        <img src="logo.png" alt="Nagłówek EnergyDiscord" class="obraz-naglowek">
 
         <p class="welcome" id="welcome-text">Witaj!</p>
         
@@ -134,7 +138,7 @@
 
             <!-- KAFELEK 1 -->
             <details>
-                <summary>Zasada 1.</summary>
+                <summary>1️⃣・Żadnych dram</summary>
                 <div class="opis-zasady">
                     Nie przenoś dram z innych serwerów tutaj, ani nie wynoś dram z tego serwera gdzie indziej.
                 </div>
@@ -142,7 +146,7 @@
 
             <!-- KAFELEK 2 -->
             <details>
-                <summary>Zasada 2.</summary>
+                <summary>2️⃣・Zasada językowa</summary>
                 <div class="opis-zasady">
                     Nie musisz znać języka polskiego, żeby tu przebywać. Możesz pisać w każdym języku, w którym czujesz się najlepiej, ale nie używaj języków jako broni, by kogoś obrazić „bo i tak nie zrozumie”.
                 </div>
@@ -150,7 +154,7 @@
 
             <!-- KAFELEK 3 -->
             <details>
-                <summary>Zasada 3.</summary>
+                <summary>3️⃣・Osoby LGBT mile widziane</summary>
                 <div class="opis-zasady">
                     To jest przestrzeń przyjazna osobom LGBT+, osobom z niepełnosprawnościami, ludziom każdego wieku i pochodzenia.
                 </div>
@@ -158,15 +162,15 @@
 
             <!-- KAFELEK 4 -->
             <details>
-                <summary>Zasada 4.</summary>
+                <summary>4️⃣・Krytykowanie zachowania</summary>
                 <div class="opis-zasady">
-                    Masz prawo skomentować czyjeś zachowanie – w tym działania administracji.
+                    Masz prawo skomentować czyjeś zachowanie - w tym działania administracji.
                 </div>
             </details>
 
             <!-- KAFELEK 5 -->
             <details>
-                <summary>Zasada 5.</summary>
+                <summary>5️⃣・EnergyDiscord ≠ sekta</summary>
                 <div class="opis-zasady">
                     To nie jest sekta. Dopóki robisz to bez przemocy słownej, masz pełne prawo powiedzieć „ej, to było nie okej”.
                 </div>
@@ -174,7 +178,7 @@
 
             <!-- KAFELEK 6 -->
             <details>
-                <summary>Zasada 6.</summary>
+                <summary>6️⃣・Nie udawaj zaburzeń psychicznych, których nie masz</summary>
                 <div class="opis-zasady">
                     Nie udawaj zaburzeń psychicznych, których nie masz. Szanuj osoby z realnymi doświadczeniami.
                 </div>
@@ -182,7 +186,7 @@
 
             <!-- KAFELEK 7 -->
             <details>
-                <summary>Zasada 7.</summary>
+                <summary>7️⃣・Używaj odpowiednich kanałów zgodnie z ich przeznaczeniem</summary>
                 <div class="opis-zasady">
                     Używaj odpowiednich kanałów zgodnie z ich przeznaczeniem. Treści nie na temat kanału będą usuwane, no chyba że przytoczone w kontekście.
                 </div>
@@ -190,7 +194,7 @@
 
             <!-- KAFELEK 8 -->
             <details>
-                <summary>Zasada 8.</summary>
+                <summary>8️⃣・Żadnych treści NSFW/NSFL</summary>
                 <div class="opis-zasady">
                     Nie publikuj materiałów nieodpowiednich dla każdego użytkownika bez odpowiednich oznaczeń. Zaspoileruj takie treści, jeżeli potrzeba.
                 </div>
@@ -198,7 +202,7 @@
 
             <!-- KAFELEK 9 -->
             <details>
-                <summary>Zasada 9.</summary>
+                <summary>9️⃣・To nie jest miejsce na łamanie RODO</summary>
                 <div class="opis-zasady">
                     Nigdy nie ujawniaj czyichś prywatnych informacji bez jego zgody. Do tego szanuj przestrzeń innych - ogranicz pingi, nie narzucaj się w DMach.
                 </div>
@@ -206,7 +210,7 @@
 
             <!-- KAFELEK 10 -->
             <details>
-                <summary>Zasada 10.</summary>
+                <summary>1️⃣0️⃣・Nie angażuj się jeżeli nie musisz</summary>
                 <div class="opis-zasady">
                     Nie każda rozmowa jest dla Ciebie - i to jest w porządku. Jeśli coś Cię nie interesuje, możesz to ominąć.
                 </div>
@@ -214,7 +218,7 @@
 
             <!-- KAFELEK 11 -->
             <details>
-                <summary>Zasada 11.</summary>
+                <summary>1️⃣1️⃣・Zostaw po sobie ślad</summary>
                 <div class="opis-zasady">
                     Nie edytuj i nie usuwaj wiadomości po dramie. Weź pełną odpowiedzialność za swoje słowa.
                 </div>
@@ -222,7 +226,7 @@
 
             <!-- KAFELEK 12 -->
             <details>
-                <summary>Zasada 12.</summary>
+                <summary>1️⃣2️⃣・Reklama</summary>
                 <div class="opis-zasady">
                     Reklamowanie się jest dozwolone wyłącznie za zezwoleniem administracji, jeśli pasuje do kontekstu rozmowy i nie jest natarczywe. Wchodzenie na serwer tylko po to, żeby się zareklamować - ban.
                 </div>
@@ -230,7 +234,7 @@
 
             <!-- KAFELEK 13 -->
             <details>
-                <summary>Zasada 13.</summary>
+                <summary>1️⃣3️⃣・Wiek użytkowników (ToS)</summary>
                 <div class="opis-zasady">
                     Zgodnie z ToS, Discord w Polsce jest 16+. Osoby poniżej 16 lat zostaną zbanowane, jeżeli się do tego przyznają.
                 </div>
@@ -238,24 +242,23 @@
 
             <!-- KAFELEK 14 -->
             <details>
-                <summary>Zasada 14.</summary>
+                <summary>1️⃣4️⃣・Serwer jest głównie anti-AI</summary>
                 <div class="opis-zasady">
                     W "Strefie Wyobraźni" i w kanałach do postowania fanartów jest zakaz używania generatywnej AI. Masz talent? Nie marnuj go. <br><br>
-                    "Patrzcie, co zrobiłem!" — nie, kochany, kłamiesz. To KOMPUTER za ciebie zrobił.
                 </div>
             </details>
 
             <!-- KAFELEK 15 -->
             <details>
-                <summary>Zasada 15.</summary>
+                <summary>1️⃣5️⃣・Wybór ról</summary>
                 <div class="opis-zasady">
-                    Możecie wybrać role na kanale ⁠🔴🟡🟢・role. Kogo z maskotek lubisz najbardziej? Na jakim stanowisku chcesz pracować w Strefie Wyobraźni? Nie wahaj się wybrać.
+                    Możecie wybrać role na kanale ⁠<a href="https://discord.com/channels/1398986303768629368/1399023228143271986">🔴🟡🟢・role</a>. Kogo z maskotek lubisz najbardziej? Na jakim stanowisku chcesz pracować w Strefie Wyobraźni? Nie wahaj się wybrać.
                 </div>
             </details>
 
             <!-- KAFELEK 16 -->
             <details>
-                <summary>Zasada 16.</summary>
+                <summary>1️⃣6️⃣・Tematy polityczne</summary>
                 <div class="opis-zasady">
                     Tematy polityczne, oraz polityka ogółem są ograniczone. Tyle w temacie. Polityka to temat raczej nie dla nas.
                 </div>
@@ -263,12 +266,13 @@
 
         </div>
 
-        <!-- STOPKA: Podmień LINK_DO_BAW_SIE_DOBRZE na właściwy adres obrazu -->
-        <img src="LINK_DO_BAW_SIE_DOBRZE" alt="Baw się dobrze!" class="obraz-stopka">
+        <!-- STOPKA: Podmień baw_sie_dobrze.png na właściwą nazwę pliku jeśli trzeba -->
+        <img src="baw_sie_dobrze.png" alt="Baw się dobrze!" class="obraz-stopka">
 
     </div>
 
     <script>
+        // --- KONFIGURACJA ---
         const CLIENT_ID = '1522174562589212813';
         const REDIRECT_URI = 'https://buraczanyuwu-cmd.github.io/regulamin-eldiscord-4tm7LM57XJQb/';
 
