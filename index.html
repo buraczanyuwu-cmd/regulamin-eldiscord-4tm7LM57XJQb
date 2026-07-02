@@ -11,10 +11,10 @@
    <style>
         html, body {
             background-image: url('assets/tlo_nwaTdUjA0HM5iwPUOrL8oUG3zE0VYwU.png');
-            background-size: cover; /* Rozciąga obraz na cały ekran */
-            background-position: center; /* Centruje obraz */
-            background-attachment: fixed; /* Obrazek stoi w miejscu, gdy przewijasz kafelki */
-            background-color: #2f3136; /* Kolor awaryjny, zanim wczyta się obrazek */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #2f3136;
             min-height: 100%;
         }
 
@@ -23,11 +23,10 @@
             font-family: 'Poppins', Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            overflow-x: hidden; /* Zapobiega paskom przewijania przy animacjach wejścia */
+            overflow-x: hidden;
             position: relative;
         }
 
-        /* PRZEŁĄCZNIK JĘZYKÓW W PRAWYM GÓRNYM ROGU */
         .language-switcher {
             position: absolute;
             top: 20px;
@@ -66,13 +65,13 @@
             font-size: 24px;
             margin-top: 20vh;
         }
+        
         #regulamin-content {
             display: none;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* Styl powitania dla użytkownika z Discorda */
         .welcome {
             text-align: center;
             color: #fff;
@@ -80,79 +79,66 @@
             font-size: 18px;
         }
 
-       /* Sekcje na grafiki (Nagłówek i Stopka) */
         .obraz-naglowek {
             display: block;
             max-width: 100%;
             height: auto;
-            margin: 60px auto 30px auto; /* 60px odstępu od góry dla lepszego wyglądu */
+            margin: 60px auto 30px auto;
         }
 
         .obraz-stopka {
             display: block;
             max-width: 100%;
             height: auto;
-            margin: 50px auto 20px auto; /* Centrowanie dolnej grafiki */
+            margin: 50px auto 20px auto;
         }
 
-        /* SIATKA KAFELKÓW (4 kolumny) */
         .siatka-zasad {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
         }
 
-        /* STYLIZACJA KAFELKA Z ANIMACJAMI */
         details {
-            background-color: #88b5fc; /* TŁO DOLNEJ CZĘŚCI ZASADY */
+            background-color: #88b5fc;
             border-radius: 20px;
             overflow: hidden;
             height: max-content;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            
-            /* Animacja wejścia (kontrolowana przez JS) */
             opacity: 0;
             transform: translateY(20px);
-            
-            /* Płynne przejścia dla efektu hover */
             transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
         }
 
-        /* Klasa dodawana przez JS, aby wywołać animację wejścia */
         details.pokaz {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Efekt po najechaniu myszką */
         details:hover {
-            transform: translateY(-5px); /* Delikatne uniesienie */
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* Mocniejszy cień */
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
-        /* GÓRNA CZĘŚĆ ZASADY (WYŚRODKOWANA) - NAPRAWIONY PADDING I INTERLINIA */
         summary {
-            background-color: #1664e0; /* KOLOR GÓRNEJ CZĘŚCI ZASADY */
+            background-color: #1664e0;
             color: white;
-            padding: 22px 35px 22px 35px; /* Zwiększony padding z boków, żeby tekst nie wchodził pod strzałkę */
+            padding: 22px 35px 22px 35px;
             font-size: 13px;
             font-weight: 600;
-            line-height: 1.4; /* Poprawia odstęp między linijkami tekstu, gdy ten się zawija */
+            line-height: 1.4;
             cursor: pointer;
             list-style: none;
             display: flex;
-            justify-content: center; /* Wyśrodkowanie tekstu poziomo */
+            justify-content: center;
             align-items: center;
-            position: relative; /* Potrzebne do pozycjonowania trójkącika */
+            position: relative;
             user-select: none;
             text-align: center;
-            min-height: 40px; /* Zapewnia minimalną wysokość, zapobiegając ucinaniu */
-            
-            /* Płynna zmiana tła przy hover */
+            min-height: 40px;
             transition: background-color 0.2s ease;
         }
 
-        /* Delikatna zmiana koloru tła summary po najechaniu */
         summary:hover {
             background-color: #1a73e8; 
         }
@@ -161,19 +147,16 @@
             display: none;
         }
 
-        /* Biały trójkącik z prawej strony */
         summary::after {
             content: '';
             position: absolute;
-            right: 12px; /* Trzyma się prawej krawędzi kafelka */
+            right: 12px;
             display: inline-block;
             width: 0;
             height: 0;
             border-left: 8px solid transparent;
             border-right: 8px solid transparent;
             border-top: 11px solid white;
-            
-            /* Płynniejsza i dłuższa animacja obrotu */
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             flex-shrink: 0;
         }
@@ -182,38 +165,30 @@
             transform: rotate(180deg);
         }
 
-        /* Wnętrze z opisem (WYŚRODKOWANE) + Animacja rozwijania */
         .opis-zasady {
             padding: 20px;
             color: white;
             font-size: 15px;
             font-weight: 400;
             line-height: 1.5;
-            text-align: center; /* Wyśrodkowanie treści zasady */
-            
-            /* Definicja animacji pojawiania się treści */
+            text-align: center;
             animation: rozwinOpis 0.5s ease-out;
-            transform-origin: top; /* Animacja startuje od góry */
+            transform-origin: top;
         }
 
-        /* Keyframes dla animacji rozwijania treści */
         @keyframes rozwinOpis {
-            0% {
-                opacity: 0;
-                transform: scaleY(0); /* Zaczyna od zerowej wysokości */
-            }
-            100% {
-                opacity: 1;
-                transform: scaleY(1); /* Pełna wysokość */
-            }
+            0% { opacity: 0; transform: scaleY(0); }
+            100% { opacity: 1; transform: scaleY(1); }
         }
 
-        /* RWD dla telefonów */
         @media (max-width: 1000px) { 
             .siatka-zasad { grid-template-columns: repeat(2, 1fr); } 
             .language-switcher { top: 10px; right: 10px; }
         }
-        @media (max-width: 650px) { .siatka-zasad { grid-template-columns: 1fr; } }
+        
+        @media (max-width: 650px) { 
+            .siatka-zasad { grid-template-columns: 1fr; } 
+        }
     </style>
 </head>
 <body>
@@ -226,20 +201,13 @@
     <div id="loading">Weryfikowanie konta Discord...</div>
 
     <div id="regulamin-content">
-        
         <img id="naglowek-grafika" src="assets/EnergyDiscord-Regulamin.png" alt="Nagłówek regulaminu" class="obraz-naglowek">
-
         <p class="welcome" id="welcome-text">Witaj!</p>
-        
-        <div class="siatka-zasad" id="zasady-container">
-            </div>
-
+        <div class="siatka-zasad" id="zasady-container"></div>
         <img src="assets/baw_sie_dobrze.png" alt="Baw się dobrze!" class="obraz-stopka">
-
     </div>
 
     <script>
-        // --- BAZA TEKSTÓW I ZASOBÓW (PL / EN) ---
         const tlumaczenia = {
             pl: {
                 loading: "Weryfikowanie konta Discord...",
@@ -248,7 +216,7 @@
                 headerImg: "assets/EnergyDiscord-Regulamin.png",
                 zasady: [
                     { title: "1️⃣・Żadnych dram", desc: "Nie przenoś dram z innych serwerów tutaj, ani nie wynoś dram z tego serwera gdzie indziej." },
-                    { title: "2️⃣・Zasada językowa", desc: "Nie musisz znać języka polskiego, żeby tu przebywać. Możesz pписать w każdym języku, w którym czujesz się najlepiej, ale nie używaj języków jako broni, by kogoś obrazić „bo i tak nie zrozumie”." },
+                    { title: "2️⃣・Zasada językowa", desc: "Nie musisz znać języka polskiego, żeby tu przebywać. Możesz pisać w każdym języku, w którym czujesz się najlepiej, ale nie używaj języków jako broni, by kogoś obrazić „bo i tak nie zrozumie”." },
                     { title: "3️⃣・Osoby LGBT mile widziane", desc: "To jest przestrzeń przyjazna osobom LGBT+, osobom z niepełnosprawnościami, ludziom każdego wieku i pochodzenia." },
                     { title: "4️⃣・Krytykowanie zachowania", desc: "Masz prawo skomentować czyjeś zachowanie - w tym działania administracji." },
                     { title: "5️⃣・EnergyDiscord ≠ sekta", desc: "To nie jest sekta. Dopóki robisz to bez przemocy słownej, masz pełne prawo powiedzieć „ej, to było nie okej”." },
@@ -296,18 +264,27 @@
 
         // --- KONFIGURACJA ---
         const CLIENT_ID = '1522174562589212813';
-        const REDIRECT_URI = 'https://buraczanyuwu-cmd.github.io/regulamin-eldiscord-4tm7LM57XJQb/';
+        
+        // Zmiana: Dynamicznie pobieramy URL, co rozwiązuje problemy przy testowaniu lokalnym
+        // Pamiętaj, aby DOKŁADNIE ten URL (bez #) dodać w sekcji OAuth2 -> Redirects na Discord Developer Portal!
+        const REDIRECT_URI = window.location.origin + window.location.pathname;
 
-        window.onload = function() {
-            // Ustawienie początkowego tekstu ładowania w zależności od domyślnego języka
+        document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('loading').innerText = tlumaczenia[aktualnyJezyk].loading;
 
             const fragment = new URLSearchParams(window.location.hash.slice(1));
             const accessToken = fragment.get('access_token');
-            const sessionToken = sessionStorage.getItem('discord_token');
+            
+            // Zabezpieczenie przed awarią np. w trybie incognito
+            let sessionToken = null;
+            try {
+                sessionToken = sessionStorage.getItem('discord_token');
+            } catch (e) {
+                console.warn("Brak dostępu do sessionStorage:", e);
+            }
 
             if (accessToken) {
-                sessionStorage.setItem('discord_token', accessToken);
+                try { sessionStorage.setItem('discord_token', accessToken); } catch (e) {}
                 window.history.replaceState({}, document.title, window.location.pathname);
                 pobierzDaneUzytkownika(accessToken);
             } else if (sessionToken) {
@@ -317,16 +294,17 @@
                 window.location.href = url;
             }
 
-            // Fallback po 3 sekundach
+            // Fallback po 3 sekundach w razie awarii połączenia
             setTimeout(() => {
                 if (document.getElementById('regulamin-content').style.display !== 'block') {
                     pokazZawartoscStrony();
                 }
             }, 3000);
-        };
+        });
 
         function pobierzDaneUzytkownika(token) {
-            fetch('https://discordapp.com/api/users/@me', {
+            // Zmiana: używamy prawidłowego i nowszego adresu API v10
+            fetch('https://discord.com/api/v10/users/@me', {
                 headers: { Authorization: `Bearer ${token}` }
             })
             .then(res => {
@@ -339,6 +317,8 @@
                 pokazZawartoscStrony();
             })
             .catch(err => {
+                console.error("Błąd autoryzacji Discord:", err);
+                try { sessionStorage.removeItem('discord_token'); } catch (e) {}
                 pokazZawartoscStrony();
             });
         }
@@ -354,7 +334,7 @@
 
         function generujKafelki() {
             const container = document.getElementById('zasady-container');
-            container.innerHTML = ''; // Czyszczenie starych kafelków
+            container.innerHTML = ''; 
 
             tlumaczenia[aktualnyJezyk].zasady.forEach(zasada => {
                 const details = document.createElement('details');
@@ -376,7 +356,6 @@
             if (aktualnyJezyk === kodJezyka) return;
             aktualnyJezyk = kodJezyka;
 
-            // Zmiana aktywności klas .active na podstawie dokładnego atrybutu data-lang
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 if (btn.getAttribute('data-lang') === kodJezyka) {
                     btn.classList.add('active');
@@ -385,33 +364,23 @@
                 }
             });
 
-            // Zmiana języka strony (atrybut HTML)
             document.documentElement.lang = kodJezyka;
-
-            // Zmiana nagłówka graficznego dla odpowiedniego języka
             document.getElementById('naglowek-grafika').src = tlumaczenia[kodJezyka].headerImg;
 
-            // Aktualizacja tekstów dynamicznych
             odswiezTekstPowitania();
             generujKafelki();
-            
-            // Ponowne uruchomienie animacji dla nowych kafelków
             animujWejscieKafelkow();
         }
 
-        // Wspólna funkcja aktywująca widok regulaminu i animacje
         function pokazZawartoscStrony() {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('regulamin-content').style.display = 'block';
-            
-            // Upewnienie się, że właściwy nagłówek ładuje się na start
             document.getElementById('naglowek-grafika').src = tlumaczenia[aktualnyJezyk].headerImg;
             
             generujKafelki();
             animujWejscieKafelkow();
         }
 
-        // Funkcja JS do dodawania klasy animacji z opóźnieniem (efekt kaskady)
         function animujWejscieKafelkow() {
             const kafelki = document.querySelectorAll('.siatka-zasad details');
             kafelki.forEach((kafelek, index) => {
