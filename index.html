@@ -204,7 +204,11 @@
         <img id="naglowek-grafika" src="assets/EnergyDiscord-Regulamin.png" alt="Nagłówek regulaminu" class="obraz-naglowek">
         <p class="welcome" id="welcome-text">Witaj!</p>
         <div class="siatka-zasad" id="zasady-container"></div>
-        <img src="assets/baw_sie_dobrze.png" alt="Baw się dobrze!" class="obraz-stopka">
+        
+        <!-- Zamieniony obrazek na dynamiczny przycisk -->
+        <a id="social-btn" href="#" class="obraz-stopka" style="width: max-content; padding: 12px 24px; background-color: #5865F2; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-family: sans-serif; text-align: center;">
+            Zasady o socialach
+        </a>
     </div>
 
     <script>
@@ -214,6 +218,8 @@
                 welcome: "Witaj!",
                 welcomeUser: "Jesteś zalogowany jako: {username}.",
                 headerImg: "assets/EnergyDiscord-Regulamin.png",
+                socialLink: "zasady-o-socialach/",         // Dodany link PL
+                socialText: "Zasady o socialach",         // Dodany tekst PL
                 zasady: [
                     { title: "1️⃣・Żadnych dram", desc: "Nie przenoś dram z innych serwerów tutaj, ani nie wynoś dram z tego serwera gdzie indziej." },
                     { title: "2️⃣・Zasada językowa", desc: "Nie musisz znać języka polskiego, żeby tu przebywać. Możesz pisać w każdym języku, w którym czujesz się najlepiej, ale nie używaj języków jako broni, by kogoś obrazić „bo i tak nie zrozumie”." },
@@ -238,6 +244,8 @@
                 welcome: "Welcome!",
                 welcomeUser: "You are logged in as: {username}.",
                 headerImg: "assets/logo_english.png",
+                socialLink: "rules-about-social-media/", // Dodany link EN
+                socialText: "Rules about social media", // Dodany tekst EN
                 zasady: [
                     { title: "1️⃣・No drama", desc: "Do not move dramas from other servers here, or move dramas from this server anywhere else." },
                     { title: "2️⃣・Language barrier", desc: "You don't need to know Polish to be here. You can write in any language you feel most comfortable with, but do not use languages as a weapon to insult someone 'because they won't understand anyway'." },
@@ -366,6 +374,11 @@
 
             document.documentElement.lang = kodJezyka;
             document.getElementById('naglowek-grafika').src = tlumaczenia[kodJezyka].headerImg;
+            
+            // AKTUALIZACJA DYNAMICZNEGO PRZYCISKU
+            const socialBtn = document.getElementById('social-btn');
+            socialBtn.href = tlumaczenia[kodJezyka].socialLink;
+            socialBtn.innerText = tlumaczenia[kodJezyka].socialText;
 
             odswiezTekstPowitania();
             generujKafelki();
@@ -377,6 +390,11 @@
             document.getElementById('regulamin-content').style.display = 'block';
             document.getElementById('naglowek-grafika').src = tlumaczenia[aktualnyJezyk].headerImg;
             
+            // INICJALIZACJA DYNAMICZNEGO PRZYCISKU
+            const socialBtn = document.getElementById('social-btn');
+            socialBtn.href = tlumaczenia[aktualnyJezyk].socialLink;
+            socialBtn.innerText = tlumaczenia[aktualnyJezyk].socialText;
+
             generujKafelki();
             animujWejscieKafelkow();
         }
