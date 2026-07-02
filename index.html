@@ -8,13 +8,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <style>
-        /* Tło strony i główna czcionka Poppins */
-        body {
+   <style>
+        html, body {
             background-image: url('assets/tlo_nwaTdUjA0HM5iwPUOrL8oUG3zE0VYwU.png');
-background-size: cover; /* Rozciąga obraz na cały ekran */
-background-position: center; /* Centruje obraz */
-background-attachment: fixed; /* Obrazek stoi w miejscu, gdy przewijasz kafelki */
+            background-size: cover; /* Rozciąga obraz na cały ekran */
+            background-position: center; /* Centruje obraz */
+            background-attachment: fixed; /* Obrazek stoi w miejscu, gdy przewijasz kafelki */
+            background-color: #2f3136; /* Kolor awaryjny, zanim wczyta się obrazek */
+            min-height: 100%;
+        }
+
+        body {
             color: white;
             font-family: 'Poppins', Arial, sans-serif;
             margin: 0;
@@ -27,7 +31,6 @@ background-attachment: fixed; /* Obrazek stoi w miejscu, gdy przewijasz kafelki 
             font-size: 24px;
             margin-top: 20vh;
         }
-
         #regulamin-content {
             display: none;
             max-width: 1200px;
