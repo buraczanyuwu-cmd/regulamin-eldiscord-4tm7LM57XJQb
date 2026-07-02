@@ -263,10 +263,9 @@
                 <summary>1️⃣2️⃣・Reklama</summary>
                 <div class="opis-zasady">
                     Reklamowanie się jest dozwolone wyłącznie za zezwoleniem administracji, jeśli pasuje do kontekstu rozmowy i nie jest natarczywe. Wchodzenie na serwer tylko po to, żeby się zareklamować - ban.
-                                </div>
+                </div>
             </details>
 
-            <!-- KAFELEK 13 -->
             <details>
                 <summary>1️⃣3️⃣・Wiek użytkowników (ToS)</summary>
                 <div class="opis-zasady">
@@ -274,7 +273,6 @@
                 </div>
             </details>
 
-            <!-- KAFELEK 14 -->
             <details>
                 <summary>1️⃣4️⃣・Serwer jest głównie anti-AI</summary>
                 <div class="opis-zasady">
@@ -282,7 +280,6 @@
                 </div>
             </details>
 
-            <!-- KAFELEK 15 -->
             <details>
                 <summary>1️⃣5️⃣・Wybór ról</summary>
                 <div class="opis-zasady">
@@ -290,7 +287,6 @@
                 </div>
             </details>
 
-            <!-- KAFELEK 16 -->
             <details>
                 <summary>1️⃣6️⃣・Tematy polityczne</summary>
                 <div class="opis-zasady">
@@ -300,7 +296,6 @@
 
         </div>
 
-        <!-- STOPKA: Podmień baw_sie_dobrze.png na właściwą nazwę pliku jeśli trzeba -->
         <img src="baw_sie_dobrze.png" alt="Baw się dobrze!" class="obraz-stopka">
 
     </div>
@@ -325,6 +320,13 @@
                 const url = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
                 window.location.href = url;
             }
+
+            // POPRAWKA: Jeśli po 3 sekundach strona nadal się "weryfikuje" (np. API Discorda wolno działa), pokazujemy regulamin jako fallback
+            setTimeout(() => {
+                if (document.getElementById('regulamin-content').style.display !== 'block') {
+                    pokazZawartoscStrony();
+                }
+            }, 3000);
         };
 
         function pobierzDaneUzytkownika(token) {
@@ -336,16 +338,31 @@
                 return res.json();
             })
             .then(user => {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('regulamin-content').style.display = 'block';
                 document.getElementById('welcome-text').innerText = `Jesteś zalogowany jako: ${user.username}.`;
+                pokazZawartoscStrony();
             })
             .catch(err => {
-                sessionStorage.removeItem('discord_token');
-                window.location.reload();
+                // Jeśli błąd, nie odświeżamy w nieskończoność, tylko pokazujemy stronę bez nazwy użytkownika
+                pokazZawartoscStrony();
+            });
+        }
+
+        // Wspólna funkcja aktywująca widok regulaminu i animacje
+        function pokazZawartoscStrony() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('regulamin-content').style.display = 'block';
+            animujWejscieKafelkow();
+        }
+
+        // Funkcja JS do dodawania klasy animacji z opóźnieniem (efekt kaskady)
+        function animujWejscieKafelkow() {
+            const kafelki = document.querySelectorAll('.siatka-zasad details');
+            kafelki.forEach((kafelek, index) => {
+                setTimeout(() => {
+                    kafelek.classList.add('pokaz');
+                }, index * 100); 
             });
         }
     </script>
 </body>
 </html>
-
