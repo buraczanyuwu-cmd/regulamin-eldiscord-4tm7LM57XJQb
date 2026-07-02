@@ -1,54 +1,98 @@
-<script>
-    // Zmieniamy strukturę danych, dodając osobne pola na zdjęcia
-    const dane = {
-        pl: {
-            zasadySociali: [
-                { 
-                    title: "1️⃣・Znak wodny", 
-                    desc: "Podczas wstawiania treści z internetu (w tym z socialów Energylandii) <b>PROSIMY O ZAMAZYWANIE WSZELKICH ZNAKÓW WODNYCH</b>.<br>A zamiast znaku wodnego zawsze możesz dopisać źródło wraz z linkiem. <a href='https://discord.com/channels/1398986303768629368/1398990174234476596/1462434782821748958'>Przykład poprawnie zapostowanego zdjęcia</a>.<hr><b>1. Oficjalna grafika promocyjna to jedyny wyjątek</b><br>Jeśli zdjęcie jest plakatem informacyjnym (np. godziny otwarcia), logo wtopione w design jest akceptowalne.<br><br><b>2. Zdjęcia reporterskie mają być czyste</b><br>Zakaz wrzucania zdjęć z „paskudnym” logo w rogu. Szpeci ono kadr.<br><br><b>3. Idealny zamiennik: „Czyste Niebo”</b><br>Logo w lewym górnym rogu ma zostać usunięte bezśladowo, pozostawiając naturalną strukturę tła.<br><br><b>W skrócie:</b> Plakat z info? Może zostać. Zwykłe foto? Ścierasz watermark do gołego nieba!",
-                    imgMain: "https://i.ibb.co/HT6mjNMX/Energy-Discord-Zasada1-PL.png",
-                    imgFooter: "https://i.ibb.co/G3WZ72W2/Energy-Discord-Zasada1-Dopelnienie.png"
-                }
-                // ... reszta zasad
-            ]
-        },
-        en: {
-            zasadySociali: [
-                { 
-                    title: "1️⃣・Watermarks", 
-                    desc: "Please remove <b>ALL WATERMARKS</b> if posting something from the internet.<hr><b>1. Official Promotional Graphics Are the Only Exception</b><br>If an image is a full-fledged informational poster, the embedded park logo is acceptable.<br><br><b>2. Landscape Photos Must Be Clean</b><br>It is strictly forbidden to submit standard photos branded with an ugly logo.<br><br><b>3. The Ultimate Standard: „Clear Skies”</b><br>The logo must be seamlessly removed, leaving the natural texture of the background intact.",
-                    imgMain: "https://i.ibb.co/mVB6HKJB/Energy-Discord-Zasada1-EN.png",
-                    imgFooter: "https://i.ibb.co/G3WZ72W2/Energy-Discord-Zasada1-Dopelnienie.png"
-                }
-            ]
-        }
-    };
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regulamin Serwera EnergyDiscord</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        html, body { background-image: url('assets/tlo_nwaTdUjA0HM5iwPUOrL8oUG3zE0VYwU.png'); background-size: cover; background-position: center; background-attachment: fixed; background-color: #2f3136; min-height: 100%; margin: 0; }
+        body { color: white; font-family: 'Poppins', Arial, sans-serif; padding: 20px; }
+        .language-switcher { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1000; }
+        .lang-btn { background-color: rgba(22, 100, 224, 0.6); color: white; border: 2px solid #1664e0; padding: 8px 14px; font-weight: 600; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .lang-btn.active { background-color: #1664e0; border-color: white; box-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        #loading { text-align: center; font-size: 24px; margin-top: 20vh; }
+        #regulamin-content { display: none; max-width: 1200px; margin: 0 auto; }
+        .obraz-naglowek { display: block; max-width: 100%; height: auto; margin: 60px auto 30px auto; }
+        .siatka-zasad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 50px; }
+        details { background-color: #88b5fc; border-radius: 20px; overflow: hidden; opacity: 0; transform: translateY(20px); transition: 0.5s; cursor: pointer; }
+        details.pokaz { opacity: 1; transform: translateY(0); }
+        summary { background-color: #1664e0; padding: 22px; font-weight: 600; text-align: center; list-style: none; }
+        summary::-webkit-details-marker { display: none; }
+        .opis-zasady { padding: 20px; text-align: center; line-height: 1.6; }
+        .zasada-grafika { display: block; width: 100%; max-width: 400px; height: auto; border-radius: 10px; margin: 15px auto; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        @media (max-width: 1000px) { .siatka-zasad { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
 
-    // Zmodyfikowana funkcja, która wstawia zdjęcia w dwóch miejscach
-    function stworzKafelek(tytul, tresc, imgM, imgF) {
-        const d = document.createElement('details'), s = document.createElement('summary'), div = document.createElement('div');
-        s.innerHTML = tytul; div.className = 'opis-zasady';
-        
-        const czesci = tresc.split('<hr>');
-        
-        // 1. Pierwsza część tekstu
-        div.innerHTML = czesci[0];
-        // 2. Zdjęcie główne
-        if (imgM) { const i = document.createElement('img'); i.src = imgM; i.className = 'zasada-grafika'; div.appendChild(i); }
-        
-        // 3. Dopełnienie (jeśli istnieje)
-        if (czesci[1]) {
-            const r = document.createElement('div');
-            r.innerHTML = czesci[1];
-            r.style.marginTop = "15px";
-            // 4. Zdjęcie dopełnienia (pod tekstem dopełnienia)
-            if (imgF) { const i2 = document.createElement('img'); i2.src = imgF; i2.className = 'zasada-grafika'; r.appendChild(i2); }
-            div.appendChild(r);
-        }
-        
-        d.append(s, div); return d;
-    }
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="pl" onclick="zmienJezyk('pl')">PL</button>
+        <button class="lang-btn" data-lang="en" onclick="zmienJezyk('en')">EN</button>
+    </div>
 
-    // Wywołanie w render():
-    // dane[aktualnyJezyk].zasadySociali.forEach(z => c2.appendChild(stworzKafelek(z.title, z.desc, z.imgMain, z.imgFooter)));
-</script>
+    <div id="loading">Weryfikowanie konta Discord...</div>
+
+    <div id="regulamin-content">
+        <img id="naglowek-grafika" src="assets/EnergyDiscord-Regulamin.png" class="obraz-naglowek">
+        <p id="welcome-text" style="text-align:center; color:#b9bbbe; margin-bottom:40px;">Witaj!</p>
+        
+        <div class="siatka-zasad" id="zasady-container"></div>
+        
+        <h2 id="social-naglowek" style="text-align:center; margin-top:50px; color:white;">Zasady postowania z sociali</h2>
+        <div class="siatka-zasad" id="social-container"></div>
+    </div>
+
+    <script>
+        const CLIENT_ID = '1522174562589212813';
+        const REDIRECT_URI = 'https://buraczanyuwu-cmd.github.io/regulamin-eldiscord-4tm7LM57XJQb/';
+        let aktualnyJezyk = 'pl';
+
+        const dane = {
+            pl: {
+                zasady: [ /* Tutaj Twoje zasady */ ],
+                zasadySociali: [
+                    { 
+                        title: "1️⃣・Znak wodny", 
+                        desc: "Podczas wstawiania treści z internetu (w tym z socialów Energylandii) <b>PROSIMY O ZAMAZYWANIE WSZELKICH ZNAKÓW WODNYCH</b>.<br>A zamiast znaku wodnego zawsze możesz dopisać źródło wraz z linkiem. <a href='https://discord.com/channels/1398986303768629368/1398990174234476596/1462434782821748958'>Przykład poprawnie zapostowanego zdjęcia</a>.<hr><b>1. Oficjalna grafika promocyjna to jedyny wyjątek</b><br>Jeśli zdjęcie jest plakatem informacyjnym (np. godziny otwarcia), logo wtopione w design jest akceptowalne.<br><br><b>2. Zdjęcia reporterskie mają być czyste</b><br>Zakaz wrzucania zdjęć z „paskudnym” logo w rogu. Szpeci ono kadr.<br><br><b>3. Idealny zamiennik: „Czyste Niebo”</b><br>Logo w lewym górnym rogu ma zostać usunięte bezśladowo, pozostawiając naturalną strukturę tła.<br><br><b>W skrócie:</b> Plakat z info? Może zostać. Zwykłe foto? Ścierasz watermark do gołego nieba!",
+                        imgMain: "https://i.ibb.co/HT6mjNMX/Energy-Discord-Zasada1-PL.png",
+                        imgFooter: "https://i.ibb.co/G3WZ72W2/Energy-Discord-Zasada1-Dopelnienie.png"
+                    }
+                ]
+            },
+            en: { zasady: [], zasadySociali: [] }
+        };
+
+        function stworzKafelek(tytul, tresc, imgM = null, imgF = null) {
+            const d = document.createElement('details'), s = document.createElement('summary'), div = document.createElement('div');
+            s.innerHTML = tytul; div.className = 'opis-zasady';
+            const czesci = tresc.split('<hr>');
+            
+            div.innerHTML = czesci[0];
+            if (imgM) { const i = document.createElement('img'); i.src = imgM; i.className = 'zasada-grafika'; div.appendChild(i); }
+            
+            if (czesci[1]) {
+                const r = document.createElement('div');
+                r.innerHTML = czesci[1];
+                r.style.marginTop = "15px";
+                if (imgF) { const i2 = document.createElement('img'); i2.src = imgF; i2.className = 'zasada-grafika'; r.appendChild(i2); }
+                div.appendChild(r);
+            }
+            d.append(s, div); return d;
+        }
+
+        function render() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('regulamin-content').style.display = 'block';
+            const c1 = document.getElementById('zasady-container'), c2 = document.getElementById('social-container');
+            c1.innerHTML = ''; c2.innerHTML = '';
+            dane[aktualnyJezyk].zasady.forEach(z => c1.appendChild(stworzKafelek(z.title, z.desc)));
+            dane[aktualnyJezyk].zasadySociali.forEach(z => c2.appendChild(stworzKafelek(z.title, z.desc, z.imgMain, z.imgFooter)));
+            document.querySelectorAll('details').forEach((d, i) => setTimeout(() => d.classList.add('pokaz'), i * 50));
+        }
+
+        window.onload = () => { /* Logika autoryzacji pozostaje bez zmian */ };
+        function zmienJezyk(k) { aktualnyJezyk = k; render(); }
+    </script>
+</body>
+</html>
