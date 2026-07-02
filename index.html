@@ -24,6 +24,41 @@
             margin: 0;
             padding: 20px;
             overflow-x: hidden; /* Zapobiega paskom przewijania przy animacjach wejścia */
+            position: relative;
+        }
+
+        /* PRZEŁĄCZNIK JĘZYKÓW W PRAWYM GÓRNYM ROGU */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .lang-btn {
+            background-color: rgba(22, 100, 224, 0.6);
+            color: white;
+            border: 2px solid #1664e0;
+            padding: 8px 14px;
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background-color: #1a73e8;
+            border-color: #1a73e8;
+        }
+
+        .lang-btn.active {
+            background-color: #1664e0;
+            border-color: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         #loading {
@@ -69,7 +104,7 @@
 
         /* STYLIZACJA KAFELKA Z ANIMACJAMI */
         details {
-            background-color: #6ba4ff; /* TŁO DOLNEJ CZĘŚCI ZASADY */
+            background-color: #88b5fc; /* TŁO DOLNEJ CZĘŚCI ZASADY */
             border-radius: 20px;
             overflow: hidden;
             height: max-content;
@@ -97,7 +132,7 @@
 
         /* GÓRNA CZĘŚĆ ZASADY (WYŚRODKOWANA) - NAPRAWIONY PADDING I INTERLINIA */
         summary {
-            background-color: #0041a8; /* KOLOR GÓRNEJ CZĘŚCI ZASADY */
+            background-color: #1664e0; /* KOLOR GÓRNEJ CZĘŚCI ZASADY */
             color: white;
             padding: 22px 35px 22px 35px; /* Zwiększony padding z boków, żeby tekst nie wchodził pod strzałkę */
             font-size: 13px;
@@ -174,11 +209,19 @@
         }
 
         /* RWD dla telefonów */
-        @media (max-width: 1000px) { .siatka-zasad { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 1000px) { 
+            .siatka-zasad { grid-template-columns: repeat(2, 1fr); } 
+            .language-switcher { top: 10px; right: 10px; }
+        }
         @media (max-width: 650px) { .siatka-zasad { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
+
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="zmienJezyk('pl')">PL</button>
+        <button class="lang-btn" onclick="zmienJezyk('en')">EN</button>
+    </div>
 
     <div id="loading">Weryfikowanie konta Discord...</div>
 
@@ -188,132 +231,75 @@
 
         <p class="welcome" id="welcome-text">Witaj!</p>
         
-        <div class="siatka-zasad">
-
-            <details>
-                <summary>1️⃣・Żadnych dram</summary>
-                <div class="opis-zasady">
-                    Nie przenoś dram z innych serwerów tutaj, ani nie wynoś dram z tego serwera gdzie indziej.
-                </div>
-            </details>
-
-            <details>
-                <summary>2️⃣・Zasada językowa</summary>
-                <div class="opis-zasady">
-                    Nie musisz znać języka polskiego, żeby tu przebywać. Możesz pisać w każdym języku, w którym czujesz się najlepiej, ale nie używaj języków jako broni, by kogoś obrazić „bo i tak nie zrozumie”.
-                </div>
-            </details>
-
-            <details>
-                <summary>3️⃣・Osoby LGBT mile widziane</summary>
-                <div class="opis-zasady">
-                    To jest przestrzeń przyjazna osobom LGBT+, osobom z niepełnosprawnościami, ludziom każdego wieku i pochodzenia.
-                </div>
-            </details>
-
-            <details>
-                <summary>4️⃣・Krytykowanie zachowania</summary>
-                <div class="opis-zasady">
-                    Masz prawo skomentować czyjeś zachowanie - w tym działania administracji.
-                </div>
-            </details>
-
-            <details>
-                <summary>5️⃣・EnergyDiscord ≠ sekta</summary>
-                <div class="opis-zasady">
-                    To nie jest sekta. Dopóki robisz to bez przemocy słownej, masz pełne prawo powiedzieć „ej, to było nie okej”.
-                </div>
-            </details>
-
-            <details>
-                <summary>6️⃣・Nie udawaj zaburzeń psychicznych, których nie masz</summary>
-                <div class="opis-zasady">
-                    Nie udawaj zaburzeń psychicznych, których nie masz. Szanuj osoby z realnymi doświadczeniami.
-                </div>
-            </details>
-
-            <details>
-                <summary>7️⃣・Używaj odpowiednich kanałów zgodnie z ich przeznaczeniem</summary>
-                <div class="opis-zasady">
-                    Używaj odpowiednich kanałów zgodnie z ich przeznaczeniem. Treści nie na temat kanału będą usuwane, no chyba że przytoczone w kontekście.
-                </div>
-            </details>
-
-            <details>
-                <summary>8️⃣・Żadnych treści NSFW/NSFL</summary>
-                <div class="opis-zasady">
-                    Nie publikuj materiałów nieodpowiednich dla każdego użytkownika bez odpowiednich oznaczeń. Zaspoileruj takie treści, jeżeli potrzeba.
-                </div>
-            </details>
-
-            <details>
-                <summary>9️⃣・To nie jest miejsce na łamanie RODO</summary>
-                <div class="opis-zasady">
-                    Nigdy nie ujawniaj czyichś prywatnych informacji bez jego zgody. Do tego szanuj przestrzeń innych - ogranicz pingi, nie narzucaj się w DMach.
-                </div>
-            </details>
-
-            <details>
-                <summary>1️⃣0️⃣・Nie angażuj się jeżeli nie musisz</summary>
-                <div class="opis-zasady">
-                    Nie każda rozmowa jest dla Ciebie - i to jest w porządku. Jeśli coś Cię nie interesuje, możesz to ominąć.
-                </div>
-            </details>
-
-            <details>
-                <summary>1️⃣1️⃣・Zostaw po sobie ślad</summary>
-                <div class="opis-zasady">
-                    Nie edytuj i nie usuwaj wiadomości po dramie. Weź pełną odpowiedzialność za swoje słowa.
-                </div>
-            </details>
-
-            <details>
-                <summary>1️⃣2️⃣・Reklama</summary>
-                <div class="opis-zasady">
-                    Reklamowanie się jest dozwolone wyłącznie za zezwoleniem administracji, jeśli pasuje do kontekstu rozmowy i nie jest natarczywe. Wchodzenie na serwer tylko po to, żeby się zareklamować - ban.
-                </div>
-            </details>
-
-            <details>
-                <summary>1️⃣3️⃣・Wiek użytkowników (ToS)</summary>
-                <div class="opis-zasady">
-                    Zgodnie z ToS, Discord w Polsce jest 16+. Osoby poniżej 16 lat zostaną zbanowane, jeżeli się do tego przyznają.
-                </div>
-            </details>
-
-            <details>
-                <summary>1️⃣4️⃣・Serwer jest głównie anti-AI</summary>
-                <div class="opis-zasady">
-                    W "Strefie Wyobraźni" i w kanałach do postowania fanartów jest zakaz używania generatywnej AI. Masz talent? Nie marnuj go. <br><br>
-                </div>
-            </details>
-
-            <details>
-                <summary>1️⃣5️⃣・Wybór ról</summary>
-                <div class="opis-zasady">
-                    Możecie wybrać role na kanale ⁠<a href="https://discord.com/channels/1398986303768629368/1399023228143271986">🔴🟡🟢・role</a>. Kogo z maskotek lubisz najbardziej? Na jakim stanowisku chcesz pracować w Strefie Wyobraźni? Nie wahaj się wybrać.
-                </div>
-            </details>
-
-            <details>
-                <summary>1️⃣6️⃣・Tematy polityczne</summary>
-                <div class="opis-zasady">
-                    Tematy polityczne, oraz polityka ogółem są ograniczone. Tyle w temacie. Polityka to temat raczej nie dla nas.
-                </div>
-            </details>
-
-        </div>
+        <div class="siatka-zasad" id="zasady-container">
+            </div>
 
         <img src="assets/baw_sie_dobrze.png" alt="Baw się dobrze!" class="obraz-stopka">
 
     </div>
 
     <script>
+        // --- BAZA TEKSTÓW (PL / EN) ---
+        const tlumaczenia = {
+            pl: {
+                loading: "Weryfikowanie konta Discord...",
+                welcome: "Witaj!",
+                welcomeUser: "Jesteś zalogowany jako: {username}.",
+                zasady: [
+                    { title: "1️⃣・Żadnych dram", desc: "Nie przenoś dram z innych serwerów tutaj, ani nie wynoś dram z tego serwera gdzie indziej." },
+                    { title: "2️⃣・Zasada językowa", desc: "Nie musisz znać języka polskiego, żeby tu przebywać. Możesz pписать w każdym języku, w którym czujesz się najlepiej, ale nie używaj języków jako broni, by kogoś obrazić „bo i tak nie zrozumie”." },
+                    { title: "3️⃣・Osoby LGBT mile widziane", desc: "To jest przestrzeń przyjazna osobom LGBT+, osobom z niepełnosprawnościami, ludziom każdego wieku i pochodzenia." },
+                    { title: "4️⃣・Krytykowanie zachowania", desc: "Masz prawo skomentować czyjeś zachowanie - w tym działania administracji." },
+                    { title: "5️⃣・EnergyDiscord ≠ sekta", desc: "To nie jest sekta. Dopóki robisz to bez przemocy słownej, masz pełne prawo powiedzieć „ej, to było nie okej”." },
+                    { title: "6️⃣・Nie udawaj zaburzeń psychicznych, których nie masz", desc: "Nie udawaj zaburzeń psychicznych, których nie masz. Szanuj osoby z realnymi doświadczeniami." },
+                    { title: "7️⃣・Używaj odpowiednich kanałów zgodnie z ich przeznaczeniem", desc: "Używaj odpowiednich kanałów zgodnie z ich przeznaczeniem. Treści nie na temat kanału będą usuwane, no chyba że przytoczone w kontekście." },
+                    { title: "8️⃣・Żadnych treści NSFW/NSFL", desc: "Nie publikuj materiałów nieodpowiednich dla każdego użytkownika bez odpowiednich oznaczeń. Zaspoileruj takie treści, jeżeli potrzeba." },
+                    { title: "9️⃣・To nie jest miejsce na łamanie RODO", desc: "Nigdy nie ujawniaj czyichś prywatnych informacji bez jego zgody. Do tego szanuj przestrzeń innych - ogranicz pingi, nie narzucaj się w DMach." },
+                    { title: "1️⃣0️⃣・Nie angażuj się jeżeli nie musisz", desc: "Nie każda rozmowa jest dla Ciebie - i to jest w porządku. Jeśli coś Cię nie interesuje, możesz to ominąć." },
+                    { title: "1️⃣1️⃣・Zostaw po sobie ślad", desc: "Nie edytuj i nie usuwaj wiadomości po dramie. Weź pełną odpowiedzialność za swoje słowa." },
+                    { title: "1️⃣2️⃣・Reklama", desc: "Reklamowanie się jest dozwolone wyłącznie za zezwoleniem administracji, jeśli pasuje do kontekstu rozmowy i nie jest natarczywe. Wchodzenie na serwer tylko po to, żeby się zareklamować - ban." },
+                    { title: "1️⃣3️⃣・Wiek użytkowników (ToS)", desc: "Zgodnie z ToS, Discord w Polsce jest 16+. Osoby poniżej 16 lat zostaną zbanowane, jeżeli się do tego przyznają." },
+                    { title: "1️⃣4️⃣・Serwer jest głównie anti-AI", desc: 'W "Strefie Wyobraźni" i w kanałach do postowania fanartów jest zakaz używania generatywnej AI. Masz talent? Nie marnuj go. <br><br>' },
+                    { title: "1️⃣5️⃣・Wybór ról", desc: 'Możecie wybrać role na kanale ⁠<a href="https://discord.com/channels/1398986303768629368/1399023228143271986">🔴🟡🟢・role</a>. Kogo z maskotek lubisz najbardziej? Na jakim stanowisku chcesz pracować w Strefie Wyobraźni? Nie wahaj się wybrać.' },
+                    { title: "1️⃣6️⃣・Tematy polityczne", desc: "Tematy polityczne, oraz polityka ogółem są ograniczone. Tyle w temacie. Polityka to temat raczej nie dla nas." }
+                ]
+            },
+            en: {
+                loading: "Verifying Discord account...",
+                welcome: "Welcome!",
+                welcomeUser: "You are logged in as: {username}.",
+                zasady: [
+                    { title: "1️⃣・No drama", desc: "Do not bring drama from other servers here, nor take drama from this server elsewhere." },
+                    { title: "2️⃣・Language rule", desc: "You don't need to know Polish to be here. You can write in any language you feel most comfortable with, but do not use languages as a weapon to insult someone 'because they won't understand anyway'." },
+                    { title: "3️⃣・LGBT people welcome", desc: "This is a space friendly to LGBT+ people, people with disabilities, and individuals of all ages and backgrounds." },
+                    { title: "4️⃣・Criticizing behavior", desc: "You have the right to comment on someone's behavior — including the actions of the administration." },
+                    { title: "5️⃣・EnergyDiscord ≠ cult", desc: "This is not a cult. As long as you do it without verbal abuse, you have every right to say 'hey, that wasn't okay'." },
+                    { title: "6️⃣・Do not fake mental disorders", desc: "Do not fake mental disorders you do not have. Respect people with real, lived experiences." },
+                    { title: "7️⃣・Use appropriate channels", desc: "Use the appropriate channels for their intended purpose. Off-topic content will be removed, unless brought up within context." },
+                    { title: "8️⃣・No NSFW/NSFL content", desc: "Do not post content that is inappropriate for all users without proper markings. Spoiler tag such content if necessary." },
+                    { title: "9️⃣・No GDPR violations", desc: "Never reveal anyone's private information without their consent. Additionally, respect others' personal space — limit pings, and do not be intrusive in DMs." },
+                    { title: "1️⃣0️⃣・Don't engage if you don't have to", desc: "Not every conversation is for you — and that's okay. If you're not interested in something, you can simply skip it." },
+                    { title: "1️⃣1️⃣・Leave a trace", desc: "Do not edit or delete messages after a drama. Take full responsibility for your words." },
+                    { title: "1️⃣2️⃣・Advertising", desc: "Advertising is only permitted with administrative approval, if it fits the context of the conversation, and is not intrusive. Joining the server solely to advertise will result in a ban." },
+                    { title: "1️⃣3️⃣・User age (ToS)", desc: "According to the ToS, Discord in Poland is for ages 16+. Anyone under 16 will be banned if they admit to it." },
+                    { title: "1️⃣4️⃣・The server is mainly anti-AI", desc: 'In the "Strefa Wyobraźni" (Imagination Zone) and fanart posting channels, the use of generative AI is strictly prohibited. Got talent? Don\'t waste it. <br><br>' },
+                    { title: "1️⃣5️⃣・Role selection", desc: 'You can choose your roles in the channel ⁠<a href="https://discord.com/channels/1398986303768629368/1399023228143271986">🔴🟡🟢・role</a>. Which mascot do you like the most? What position do you want to hold in the Strefa Wyobraźni? Don\'t hesitate to choose.' },
+                    { title: "1️⃣6️⃣・Political topics", desc: "Political topics and politics in general are restricted. Simple as that. Politics is generally not a topic for us." }
+                ]
+            }
+        };
+
+        let aktualnyJezyk = 'pl';
+        let nazwaUzytkownika = '';
+
         // --- KONFIGURACJA ---
         const CLIENT_ID = '1522174562589212813';
         const REDIRECT_URI = 'https://buraczanyuwu-cmd.github.io/regulamin-eldiscord-4tm7LM57XJQb/';
 
         window.onload = function() {
+            // Ustawienie początkowego tekstu ładowania w zależności od domyślnego języka
+            document.getElementById('loading').innerText = tlumaczenia[aktualnyJezyk].loading;
+
             const fragment = new URLSearchParams(window.location.hash.slice(1));
             const accessToken = fragment.get('access_token');
             const sessionToken = sessionStorage.getItem('discord_token');
@@ -329,7 +315,7 @@
                 window.location.href = url;
             }
 
-            // POPRAWKA: Jeśli po 3 sekundach strona nadal się "weryfikuje" (np. API Discorda wolno działa), pokazujemy regulamin jako fallback
+            // Fallback po 3 sekundach
             setTimeout(() => {
                 if (document.getElementById('regulamin-content').style.display !== 'block') {
                     pokazZawartoscStrony();
@@ -346,19 +332,73 @@
                 return res.json();
             })
             .then(user => {
-                document.getElementById('welcome-text').innerText = `Jesteś zalogowany jako: ${user.username}.`;
+                nazwaUzytkownika = user.username;
+                odswiezTekstPowitania();
                 pokazZawartoscStrony();
             })
             .catch(err => {
-                // Jeśli błąd, nie odświeżamy w nieskończoność, tylko pokazujemy stronę bez nazwy użytkownika
                 pokazZawartoscStrony();
             });
+        }
+
+        function odswiezTekstPowitania() {
+            const welcomeTextEl = document.getElementById('welcome-text');
+            if (nazwaUzytkownika) {
+                welcomeTextEl.innerText = tlumaczenia[aktualnyJezyk].welcomeUser.replace('{username}', nazwaUzytkownika);
+            } else {
+                welcomeTextEl.innerText = tlumaczenia[aktualnyJezyk].welcome;
+            }
+        }
+
+        function generujKafelki() {
+            const container = document.getElementById('zasady-container');
+            container.innerHTML = ''; // Czyszczenie starych kafelków
+
+            tlumaczenia[aktualnyJezyk].zasady.forEach(zasada => {
+                const details = document.createElement('details');
+                
+                const summary = document.createElement('summary');
+                summary.innerHTML = zasada.title;
+                
+                const opisDiv = document.createElement('div');
+                opisDiv.className = 'opis-zasady';
+                opisDiv.innerHTML = zasada.desc;
+
+                details.appendChild(summary);
+                details.appendChild(opisDiv);
+                container.appendChild(details);
+            });
+        }
+
+        function zmienJezyk(kodJezyka) {
+            if (aktualnyJezyk === kodJezyka) return;
+            aktualnyJezyk = kodJezyka;
+
+            // Aktualizacja aktywności przycisków w menu
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('onclick').includes(kodJezyka)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Zmiana języka strony (atrybut HTML)
+            document.documentElement.lang = kodJezyka;
+
+            // Aktualizacja tekstów dynamicznych
+            odswiezTekstPowitania();
+            generujKafelki();
+            
+            // Ponowne uruchomienie animacji dla nowych kafelków
+            animujWejscieKafelkow();
         }
 
         // Wspólna funkcja aktywująca widok regulaminu i animacje
         function pokazZawartoscStrony() {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('regulamin-content').style.display = 'block';
+            generujKafelki();
             animujWejscieKafelkow();
         }
 
