@@ -219,15 +219,14 @@
 <body>
 
     <div class="language-switcher">
-        <button class="lang-btn active" onclick="zmienJezyk('pl')">PL</button>
-        <button class="lang-btn" onclick="zmienJezyk('en')">EN</button>
+        <button class="lang-btn active" data-lang="pl" onclick="zmienJezyk('pl')">PL</button>
+        <button class="lang-btn" data-lang="en" onclick="zmienJezyk('en')">EN</button>
     </div>
 
     <div id="loading">Weryfikowanie konta Discord...</div>
 
     <div id="regulamin-content">
         
-        <!-- Dodano ID dla dynamicznej podmiany nagłówka graficznego -->
         <img id="naglowek-grafika" src="assets/EnergyDiscord-Regulamin.png" alt="Nagłówek regulaminu" class="obraz-naglowek">
 
         <p class="welcome" id="welcome-text">Witaj!</p>
@@ -377,9 +376,9 @@
             if (aktualnyJezyk === kodJezyka) return;
             aktualnyJezyk = kodJezyka;
 
-            // Aktualizacja aktywności przycisków w menu
+            // Zmiana aktywności klas .active na podstawie dokładnego atrybutu data-lang
             document.querySelectorAll('.lang-btn').forEach(btn => {
-                if (btn.getAttribute('onclick').includes(kodJezyka)) {
+                if (btn.getAttribute('data-lang') === kodJezyka) {
                     btn.classList.add('active');
                 } else {
                     btn.classList.remove('active');
