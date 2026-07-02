@@ -67,11 +67,11 @@
             height: max-content;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             
-            /* NOWE: Animacja wejścia (będzie kontrolowana przez JS) */
+            /* Animacja wejścia (kontrolowana przez JS) */
             opacity: 0;
             transform: translateY(20px);
             
-            /* NOWE: Płynne przejścia dla efektu hover */
+            /* Płynne przejścia dla efektu hover */
             transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
         }
 
@@ -81,19 +81,20 @@
             transform: translateY(0);
         }
 
-        /* NOWE: Efekt po najechaniu myszką */
+        /* Efekt po najechaniu myszką */
         details:hover {
             transform: translateY(-5px); /* Delikatne uniesienie */
             box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* Mocniejszy cień */
         }
 
-        /* GÓRNA CZĘŚĆ ZASADY (WYŚRODKOWANA) */
+        /* GÓRNA CZĘŚĆ ZASADY (WYŚRODKOWANA) - NAPRAWIONY PADDING I INTERLINIA */
         summary {
             background-color: #1664e0; /* KOLOR GÓRNEJ CZĘŚCI ZASADY */
             color: white;
-            padding: 20px 15px;
-            font-size: 10px;
+            padding: 22px 35px 22px 35px; /* Zwiększony padding z boków, żeby tekst nie wchodził pod strzałkę */
+            font-size: 13px; /* Zwiększono lekko rozmiar z 10px, by tekst był czytelniejszy */
             font-weight: 600;
+            line-height: 1.4; /* Poprawia odstęp między linijkami tekstu, gdy ten się zawija */
             cursor: pointer;
             list-style: none;
             display: flex;
@@ -102,12 +103,13 @@
             position: relative; /* Potrzebne do pozycjonowania trójkącika */
             user-select: none;
             text-align: center;
+            min-height: 40px; /* Zapewnia minimalną wysokość, zapobiegając ucinaniu */
             
-            /* NOWE: Płynna zmiana tła przy hover */
+            /* Płynna zmiana tła przy hover */
             transition: background-color 0.2s ease;
         }
 
-        /* NOWE: Delikatna zmiana koloru tła summary po najechaniu */
+        /* Delikatna zmiana koloru tła summary po najechaniu */
         summary:hover {
             background-color: #1a73e8; 
         }
@@ -120,15 +122,15 @@
         summary::after {
             content: '';
             position: absolute;
-            right: 15px; /* Trójkącik trzyma się zawsze prawej krawędzi */
+            right: 12px; /* Trzyma się prawej krawędzi kafelka */
             display: inline-block;
             width: 0;
             height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 13px solid white;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 11px solid white;
             
-            /* ZMIANA: Płynniejsza i dłuższa animacja obrotu */
+            /* Płynniejsza i dłuższa animacja obrotu */
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             flex-shrink: 0;
         }
@@ -146,12 +148,12 @@
             line-height: 1.5;
             text-align: center; /* Wyśrodkowanie treści zasady */
             
-            /* NOWE: Definicja animacji pojawiania się treści */
+            /* Definicja animacji pojawiania się treści */
             animation: rozwinOpis 0.5s ease-out;
             transform-origin: top; /* Animacja startuje od góry */
         }
 
-        /* NOWE: Keyframes dla animacji rozwijania treści */
+        /* Keyframes dla animacji rozwijania treści */
         @keyframes rozwinOpis {
             0% {
                 opacity: 0;
@@ -260,7 +262,7 @@
             <details>
                 <summary>1️⃣2️⃣・Reklama</summary>
                 <div class="opis-zasady">
-                    Reklamowanie się jest dozwolone wyłącznie za zezwoleniem administracji, jika pasuje do kontekstu rozmowy i nie jest natarczywe. Wchodzenie na serwer tylko po to, żeby się zareklamować - ban.
+                    Reklamowanie się jest dozwolone wyłącznie za zezwoleniem administracji, jeśli pasuje do kontekstu rozmowy i nie jest natarczywe. Wchodzenie na serwer tylko po to, żeby się zareklamować - ban.
                 </div>
             </details>
 
@@ -301,4 +303,57 @@
     <script>
         // --- KONFIGURACJA ---
         const CLIENT_ID = '1522174562589212813';
-        const REDIRECT_URI = '
+        const REDIRECT_URI = 'https://buraczanyuwu-cmd.github.io/regulamin-eldiscord-4tm7LM57XJQb/';
+
+        window.onload = function() {
+            const fragment = new URLSearchParams(window.location.hash.slice(1));
+            const accessToken = fragment.get('access_token');
+            const sessionToken = sessionStorage.getItem('discord_token');
+
+            if (accessToken) {
+                sessionStorage.setItem('discord_token', accessToken);
+                window.history.replaceState({}, document.title, window.location.pathname);
+                pobierzDaneUzytkownika(accessToken);
+            } else if (sessionToken) {
+                pobierzDaneUzytkownika(sessionToken);
+            } else {
+                const url = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+                window.location.href = url;
+            }
+        };
+
+        function pobierzDaneUzytkownika(token) {
+            fetch('https://discordapp.com/api/users/@me', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            .then(res => {
+                if (!res.ok) throw new Error('Token wygasł');
+                return res.json();
+            })
+            .then(user => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('regulamin-content').style.display = 'block';
+                document.getElementById('welcome-text').innerText = `Jesteś zalogowany jako: ${user.username}.`;
+                
+                // Uruchom animację pojawiania się kafelków po załadowaniu treści
+                animujWejscieKafelkow();
+            })
+            .catch(err => {
+                sessionStorage.removeItem('discord_token');
+                window.location.reload();
+            });
+        }
+
+        // Funkcja JS do dodawania klasy animacji z opóźnieniem (efekt kaskady)
+        function animujWejscieKafelkow() {
+            const kafelki = document.querySelectorAll('.siatka-zasad details');
+            kafelki.forEach((kafelek, index) => {
+                // Ustawiamy opóźnienie dla każdego kafelka (np. 100ms * indeks)
+                setTimeout(() => {
+                    kafelek.classList.add('pokaz');
+                }, index * 100); 
+            });
+        }
+    </script>
+</body>
+</html>
