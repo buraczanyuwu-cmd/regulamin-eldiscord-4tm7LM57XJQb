@@ -1,1 +1,426 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zasady o social mediach - EnergyDiscord</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        html, body {
+            background-image: url('../assets/tlo_nwaTdUjA0HM5iwPUOrL8oUG3zE0VYwU.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #2f3136;
+            min-height: 100%;
+        }
 
+        body {
+            color: white;
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .lang-btn {
+            background-color: rgba(22, 100, 224, 0.6);
+            color: white;
+            border: 2px solid #1664e0;
+            padding: 8px 14px;
+            font-family: 'Poppins', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background-color: #1a73e8;
+            border-color: #1a73e8;
+        }
+
+        .lang-btn.active {
+            background-color: #1664e0;
+            border-color: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        #regulamin-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .obraz-naglowek {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 60px auto 20px auto;
+        }
+
+        .welcome {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 40px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .siatka-zasad {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        details {
+            background-color: #88b5fc;
+            border-radius: 20px;
+            overflow: hidden;
+            height: max-content;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+        }
+
+        details.pokaz {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        details:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        summary {
+            background-color: #1664e0;
+            color: white;
+            padding: 22px 45px 22px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            position: relative;
+            user-select: none;
+            min-height: 40px;
+            transition: background-color 0.2s ease;
+        }
+
+        summary:hover {
+            background-color: #1a73e8; 
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '';
+            position: absolute;
+            right: 20px;
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 11px solid white;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+        }
+
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .opis-zasady {
+            padding: 25px;
+            color: white;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.6;
+            text-align: left;
+            animation: rozwinOpis 0.5s ease-out;
+            transform-origin: top;
+        }
+
+        .opis-zasady h4 {
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #1a3a6e;
+            font-size: 16px;
+        }
+
+        .opis-zasady p {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        .opis-zasady a {
+            color: #1a3a6e;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .opis-zasady a:hover {
+            color: #0d2140;
+        }
+
+        .rule-image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+            justify-content: center;
+        }
+
+        .rule-image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        .podsumowanie-box {
+            background-color: rgba(22, 100, 224, 0.2);
+            border-left: 4px solid #1664e0;
+            padding: 12px 15px;
+            margin-top: 15px;
+            border-radius: 0 8px 8px 0;
+            font-weight: 600;
+        }
+
+        .nav-btn {
+            display: block;
+            width: max-content;
+            margin: 50px auto 20px auto;
+            padding: 12px 28px;
+            background-color: #1664e0;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #1a73e8;
+            transform: translateY(-2px);
+        }
+
+        @keyframes rozwinOpis {
+            0% { opacity: 0; transform: scaleY(0); }
+            100% { opacity: 1; transform: scaleY(1); }
+        }
+
+        @media (max-width: 768px) { 
+            .language-switcher { top: 10px; right: 10px; }
+            summary { padding: 18px 40px 18px 18px; font-size: 15px; }
+            .opis-zasady { padding: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="pl" onclick="zmienJezyk('pl')">PL</button>
+        <button class="lang-btn" data-lang="en" onclick="zmienJezyk('en')">EN</button>
+    </div>
+
+    <div id="regulamin-content">
+        <img id="naglowek-grafika" src="../assets/EnergyDiscord-Regulamin.png" alt="Nagłówek" class="obraz-naglowek">
+        <p class="welcome" id="page-subtitle">Zasady o postowaniu z social media</p>
+        
+        <div class="siatka-zasad" id="zasady-container"></div>
+        
+        <a id="back-btn" href="../index.html" class="nav-btn">⬅ Powrót do głównego regulaminu</a>
+    </div>
+
+    <script>
+        const tlumaczenia = {
+            pl: {
+                subtitle: "Zasady o postowaniu z social media",
+                backBtn: "⬅ Powrót do głównego regulaminu",
+                headerImg: "../assets/EnergyDiscord-Regulamin.png",
+                zasady: [
+                    { 
+                        title: "1️⃣・Usuwanie znaków wodnych (Watermarków)", 
+                        desc: `
+                            <p>Podczas wstawiania treści z internetu (w tym z social mediów) <strong>PROSIMY O ZAMAZYWANIE WSZELKICH ZNAKÓW WODNYCH</strong>. Nie czas na reklamę. Serwer skupia się na estetyce, a takie elementy często rozpraszają uwagę lub psują wygląd zdjęcia.</p>
+                            <p>Swoje logo możesz dodać na elementach, z których łatwo je usunąć (np. na jednokolorowej ramce). Zamiast znaku wodnego zawsze podawaj źródło wraz z linkiem. <a href="https://discord.com/channels/1398986303768629368/1398990174234476596/1462434782821748958" target="_blank">Przykład poprawnie zapostowanego zdjęcia.</a></p>
+                            
+                            <div class="rule-image-container">
+                                <img src="link-do-zdjecia-1.png" alt="Przykład usuwania znaków wodnych" style="max-width: 45%;">
+                                <img src="link-do-zdjecia-2.png" alt="Jak poprawnie wstawiać fotki" style="max-width: 45%;">
+                            </div>
+
+                            <h4>1. Oficjalna grafika promocyjna to jedyny wyjątek</h4>
+                            <p><strong>Zasada:</strong> Jeśli zdjęcie jest pełnoprawnym plakatem informacyjnym lub banerem reklamowym parku (np. godziny otwarcia na Majówkę czy zapowiedź otwarcia), wbudowane logo parku wtopione w design jest w pełni akceptowalne.<br>
+                            <strong>Dlaczego:</strong> Stanowi ono integralną część kompozycji graficznej stworzonej do celów czysto marketingowych.</p>
+
+                            <h4>2. Zdjęcia reporterskie i widokowe mają być czyste</h4>
+                            <p><strong>Zasada:</strong> Bezwzględny zakaz wrzucania zwykłych zdjęć z terenu parku (np. pola kempingowego, coasterów, infrastruktury), które zostały „oznaczone” paskudnym logo w rogu.<br>
+                            <strong>Dlaczego:</strong> Taki watermark w żaden sposób nie podnosi wartości zdjęcia - wręcz przeciwnie, szpeci niebo, odciąga uwagę od kadru i niszczy jego archiwalną wartość.</p>
+
+                            <h4>3. Idealny zamiennik, czyli "Czyste Niebo"</h4>
+                            <p><strong>Zasada:</strong> Każde zdjęcie wrzucane do bazy docelowo musi wyglądać tak, jak na dolnym prawym przykładzie. Logo w lewym górnym rogu ma zostać całkowicie i bezśladowo usunięte (wymazane/wyretuszowane), pozostawiając idealną, naturalną strukturę tła (np. chmur).<br>
+                            <strong>Dlaczego:</strong> Tylko w ten sposób buduje się profesjonalną, czystą galerię dla pasjonatów, wolną od korporacyjnych "pieczątek".</p>
+
+                            <div class="podsumowanie-box">
+                                💡 Mówiąc krótko: Plakat z info? Może zostać. Zwykłe foto? Ścierasz watermark do gołego nieba i dopiero wtedy wrzucasz!
+                            </div>
+                        ` 
+                    },
+                    { 
+                        title: "2️⃣・Uniwersalne emotikony (Zero tolerancji dla rasizmu)", 
+                        desc: `
+                            <p>Serwer EnergyDiscord nie toleruje rasizmu w żadnej postaci. Zależy nam na budowaniu przyjaznej, neutralnej i bezpiecznej przestrzeni dla każdego użytkownika.</p>
+                            <p>Prosimy o zamienianie emotek w innym kolorze skóry (jak na przykład 👋🏼 czy 👍🏿) na ich uniwersalną, domyślną wersję: 👋, 👍. Klasyczne, żółte emotki zostały stworzone jako neutralne i pozbawione cech rasowych. Ograniczenie się do nich ujednolica naszą komunikację i podkreśla, że wszyscy traktujemy się tutaj na równi.</p>
+                            <p><a href="https://discord.com/channels/1398986303768629368/1500235815307968582/1522917636839702659" target="_blank">Zobacz przykład poprawnie zapostowanego zdjęcia i komunikatu.</a></p>
+                        ` 
+                    },
+                    { 
+                        title: "3️⃣・Prawa autorskie i podawanie źródeł", 
+                        desc: `
+                            <p>Zawsze oznaczaj <strong>FAKTYCZNEGO autora zdjęć</strong>, jeżeli publikujesz coś z sieci. Szanujemy cudzą pracą i chcemy, by każdy twórca otrzymał należny mu kredyt zaufania.</p>
+                            <p>Staraj się zrobić krótki research, jeżeli chodzi o dotarcie do oryginalnego twórcy - bardzo zalecamy i zachęcamy do korzystania z narzędzi takich jak <strong>Google Lens</strong> w celu weryfikacji źródła przed publikacją.</p>
+                            <p><a href="https://discord.com/channels/1398986303768629368/1427011639739154485/1516147601953652766" target="_blank">Przykład poprawnie zapostowanego zdjęcia z oznaczeniem źródła.</a></p>
+                        ` 
+                    }
+                ]
+            },
+            en: {
+                subtitle: "Rules about posting from social media",
+                backBtn: "⬅ Back to main rules",
+                headerImg: "../assets/logo_english.png",
+                zasady: [
+                    { 
+                        title: "1️⃣・Removing Watermarks", 
+                        desc: `
+                            <p>When posting content from the internet (including social media), <strong>PLEASE BLUR OR REMOVE ALL WATERMARKS</strong>. This is not a space for advertising. Our server focuses on aesthetics, and such elements often distract or ruin the quality of photos.</p>
+                            <p>You may add your logo only on elements where it can be easily removed (e.g., solid-colored borders). Instead of a watermark, always credit the source with a direct link. <a href="https://discord.com/channels/1398986303768629368/1398990174234476596/1462434782821748958" target="_blank">Example of a properly posted photo.</a></p>
+                            
+                            <div class="rule-image-container">
+                                <img src="link-do-zdjecia-1.png" alt="Watermark removal example" style="max-width: 45%;">
+                                <img src="link-do-zdjecia-2.png" alt="How to post properly" style="max-width: 45%;">
+                            </div>
+
+                            <h4>1. Official promotional graphics are the only exception</h4>
+                            <p><strong>Rule:</strong> If the photo is an official park poster or promotional banner (e.g., May Day opening hours or attraction announcements), built-in logos blended into the design are fully acceptable.<br>
+                            <strong>Why:</strong> They are an integral part of a graphic composition created purely for marketing purposes.</p>
+
+                            <h4>2. Reportage and landscape photos must be clean</h4>
+                            <p><strong>Rule:</strong> Strictly no regular photos from the park (e.g., camping sites, coasters, infrastructure) branded with an ugly logo in the corner.<br>
+                            <strong>Why:</strong> A watermark does not add any value to the photo - on the contrary, it ruins the sky, distracts from the frame, and destroys its archival value.</p>
+
+                            <h4>3. The ideal replacement: "Clean Sky"</h4>
+                            <p><strong>Rule:</strong> Every photo uploaded to our database must ultimately look like the bottom-right example. Logos in corners must be completely retouched out, leaving a natural background structure (e.g., clouds).<br>
+                            <strong>Why:</strong> This is the only way to build a clean, professional gallery for enthusiasts, free from corporate stamps.</p>
+
+                            <div class="podsumowanie-box">
+                                💡 In short: Informational poster? Keep it. Regular photo? Erase the watermark down to the clear sky before posting!
+                            </div>
+                        ` 
+                    },
+                    { 
+                        title: "2️⃣・Universal Emojis (Zero Tolerance for Racism)", 
+                        desc: `
+                            <p>EnergyDiscord does not tolerate racism in any form. We aim to build a friendly, neutral, and safe environment for all users.</p>
+                            <p>Please replace skin-toned emojis (such as 👋🏼 or 👍🏿) with their universal, default yellow versions: 👋, 👍. Classic yellow emojis were designed to be completely neutral. Relying solely on them prevents division and reinforces that everyone is treated equally here.</p>
+                            <p><a href="https://discord.com/channels/1398986303768629368/1500235815307968582/1522917636839702659" target="_blank">See an example of a correctly formatted post.</a></p>
+                        ` 
+                    },
+                    { 
+                        title: "3️⃣・Copyright and Crediting Sources", 
+                        desc: `
+                            <p>Always credit the <strong>ACTUAL author of the photos</strong> when publishing anything from the web. We respect creators' work and want to ensure proper attribution.</p>
+                            <p>Please do quick research to find the original creator — we highly recommend using tools like <strong>Google Lens</strong> to verify the original source before publishing.</p>
+                            <p><a href="https://discord.com/channels/1398986303768629368/1427011639739154485/1516147601953652766" target="_blank">Example of a properly credited photo post.</a></p>
+                        ` 
+                    }
+                ]
+            }
+        };
+
+        let aktualnyJezyk = 'pl';
+
+        document.addEventListener("DOMContentLoaded", function() {
+            generujKafelki();
+            animujWejscieKafelkow();
+        });
+
+        function generujKafelki() {
+            const container = document.getElementById('zasady-container');
+            container.innerHTML = ''; 
+
+            tlumaczenia[aktualnyJezyk].zasady.forEach(zasada => {
+                const details = document.createElement('details');
+                // Otwórz pierwszy kafelek domyślnie dla lepszego wrażenia wizualnego
+                if(zasada === tlumaczenia[aktualnyJezyk].zasady[0]) details.open = true;
+                
+                const summary = document.createElement('summary');
+                summary.innerHTML = zasada.title;
+                
+                const opisDiv = document.createElement('div');
+                opisDiv.className = 'opis-zasady';
+                opisDiv.innerHTML = zasada.desc;
+
+                details.appendChild(summary);
+                details.appendChild(opisDiv);
+                container.appendChild(details);
+            });
+        }
+
+        function zmienJezyk(kodJezyka) {
+            if (aktualnyJezyk === kodJezyka) return;
+            aktualnyJezyk = kodJezyka;
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('data-lang') === kodJezyka) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            document.documentElement.lang = kodJezyka;
+            document.getElementById('naglowek-grafika').src = tlumaczenia[kodJezyka].headerImg;
+            document.getElementById('page-subtitle').innerText = tlumaczenia[kodJezyka].subtitle;
+            
+            const backBtn = document.getElementById('back-btn');
+            backBtn.innerText = tlumaczenia[kodJezyka].backBtn;
+
+            generujKafelki();
+            animujWejscieKafelkow();
+        }
+
+        function animujWejscieKafelkow() {
+            const kafelki = document.querySelectorAll('.siatka-zasad details');
+            kafelki.forEach((kafelek, index) => {
+                setTimeout(() => {
+                    kafelek.classList.add('pokaz');
+                }, index * 100); 
+            });
+        }
+    </script>
+</body>
+</html>
